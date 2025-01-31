@@ -25,28 +25,5 @@ export default {
       },
     },
   },
-  plugins: [
-    heroui({
-      themes: {
-        light: {
-          colors: {
-            primary: {
-              50: '#fef4e4',
-              100: '#fce4bd',
-              200: '#fad497',
-              300: '#f9c571',
-              400: '#f7b54a',
-              500: '#f5a524',
-              600: '#ca881e',
-              700: '#9f6b17',
-              800: '#744e11',
-              900: '#4a320b',
-              foreground: '#000',
-              DEFAULT: '#f5a524',
-            },
-          },
-        },
-      },
-    }),
-  ],
+  plugins: [heroui()],
 };
