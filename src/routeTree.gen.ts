@@ -11,9 +11,31 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as DashboardRouteImport } from './routes/dashboard/route'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as authIndexImport } from './routes/(auth)/index'
+import { Route as DashboardVisitorsIndexImport } from './routes/dashboard/visitors/index'
+import { Route as DashboardPastorsAndBishopsIndexImport } from './routes/dashboard/pastors-and-bishops/index'
+import { Route as DashboardMembersIndexImport } from './routes/dashboard/members/index'
+import { Route as DashboardEldersIndexImport } from './routes/dashboard/elders/index'
+import { Route as DashboardDepartmentsIndexImport } from './routes/dashboard/departments/index'
+import { Route as DashboardDeaconessesIndexImport } from './routes/dashboard/deaconesses/index'
+import { Route as DashboardCommitteeIndexImport } from './routes/dashboard/committee/index'
+import { Route as DashboardChildrenIndexImport } from './routes/dashboard/children/index'
 
 // Create/Update Routes
+
+const DashboardRouteRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
 
 const authIndexRoute = authIndexImport.update({
   id: '/(auth)/',
@@ -21,10 +43,66 @@ const authIndexRoute = authIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DashboardVisitorsIndexRoute = DashboardVisitorsIndexImport.update({
+  id: '/visitors/',
+  path: '/visitors/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardPastorsAndBishopsIndexRoute =
+  DashboardPastorsAndBishopsIndexImport.update({
+    id: '/pastors-and-bishops/',
+    path: '/pastors-and-bishops/',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+
+const DashboardMembersIndexRoute = DashboardMembersIndexImport.update({
+  id: '/members/',
+  path: '/members/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardEldersIndexRoute = DashboardEldersIndexImport.update({
+  id: '/elders/',
+  path: '/elders/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardDepartmentsIndexRoute = DashboardDepartmentsIndexImport.update({
+  id: '/departments/',
+  path: '/departments/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardDeaconessesIndexRoute = DashboardDeaconessesIndexImport.update({
+  id: '/deaconesses/',
+  path: '/deaconesses/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardCommitteeIndexRoute = DashboardCommitteeIndexImport.update({
+  id: '/committee/',
+  path: '/committee/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
+const DashboardChildrenIndexRoute = DashboardChildrenIndexImport.update({
+  id: '/children/',
+  path: '/children/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/(auth)/': {
       id: '/(auth)/'
       path: '/'
@@ -32,38 +110,193 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authIndexImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/children/': {
+      id: '/dashboard/children/'
+      path: '/children'
+      fullPath: '/dashboard/children'
+      preLoaderRoute: typeof DashboardChildrenIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/committee/': {
+      id: '/dashboard/committee/'
+      path: '/committee'
+      fullPath: '/dashboard/committee'
+      preLoaderRoute: typeof DashboardCommitteeIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/deaconesses/': {
+      id: '/dashboard/deaconesses/'
+      path: '/deaconesses'
+      fullPath: '/dashboard/deaconesses'
+      preLoaderRoute: typeof DashboardDeaconessesIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/departments/': {
+      id: '/dashboard/departments/'
+      path: '/departments'
+      fullPath: '/dashboard/departments'
+      preLoaderRoute: typeof DashboardDepartmentsIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/elders/': {
+      id: '/dashboard/elders/'
+      path: '/elders'
+      fullPath: '/dashboard/elders'
+      preLoaderRoute: typeof DashboardEldersIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/members/': {
+      id: '/dashboard/members/'
+      path: '/members'
+      fullPath: '/dashboard/members'
+      preLoaderRoute: typeof DashboardMembersIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/pastors-and-bishops/': {
+      id: '/dashboard/pastors-and-bishops/'
+      path: '/pastors-and-bishops'
+      fullPath: '/dashboard/pastors-and-bishops'
+      preLoaderRoute: typeof DashboardPastorsAndBishopsIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/visitors/': {
+      id: '/dashboard/visitors/'
+      path: '/visitors'
+      fullPath: '/dashboard/visitors'
+      preLoaderRoute: typeof DashboardVisitorsIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface DashboardRouteRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardChildrenIndexRoute: typeof DashboardChildrenIndexRoute
+  DashboardCommitteeIndexRoute: typeof DashboardCommitteeIndexRoute
+  DashboardDeaconessesIndexRoute: typeof DashboardDeaconessesIndexRoute
+  DashboardDepartmentsIndexRoute: typeof DashboardDepartmentsIndexRoute
+  DashboardEldersIndexRoute: typeof DashboardEldersIndexRoute
+  DashboardMembersIndexRoute: typeof DashboardMembersIndexRoute
+  DashboardPastorsAndBishopsIndexRoute: typeof DashboardPastorsAndBishopsIndexRoute
+  DashboardVisitorsIndexRoute: typeof DashboardVisitorsIndexRoute
+}
+
+const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardChildrenIndexRoute: DashboardChildrenIndexRoute,
+  DashboardCommitteeIndexRoute: DashboardCommitteeIndexRoute,
+  DashboardDeaconessesIndexRoute: DashboardDeaconessesIndexRoute,
+  DashboardDepartmentsIndexRoute: DashboardDepartmentsIndexRoute,
+  DashboardEldersIndexRoute: DashboardEldersIndexRoute,
+  DashboardMembersIndexRoute: DashboardMembersIndexRoute,
+  DashboardPastorsAndBishopsIndexRoute: DashboardPastorsAndBishopsIndexRoute,
+  DashboardVisitorsIndexRoute: DashboardVisitorsIndexRoute,
+}
+
+const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
+  DashboardRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
+  '/dashboard': typeof DashboardRouteRouteWithChildren
   '/': typeof authIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/children': typeof DashboardChildrenIndexRoute
+  '/dashboard/committee': typeof DashboardCommitteeIndexRoute
+  '/dashboard/deaconesses': typeof DashboardDeaconessesIndexRoute
+  '/dashboard/departments': typeof DashboardDepartmentsIndexRoute
+  '/dashboard/elders': typeof DashboardEldersIndexRoute
+  '/dashboard/members': typeof DashboardMembersIndexRoute
+  '/dashboard/pastors-and-bishops': typeof DashboardPastorsAndBishopsIndexRoute
+  '/dashboard/visitors': typeof DashboardVisitorsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof authIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/children': typeof DashboardChildrenIndexRoute
+  '/dashboard/committee': typeof DashboardCommitteeIndexRoute
+  '/dashboard/deaconesses': typeof DashboardDeaconessesIndexRoute
+  '/dashboard/departments': typeof DashboardDepartmentsIndexRoute
+  '/dashboard/elders': typeof DashboardEldersIndexRoute
+  '/dashboard/members': typeof DashboardMembersIndexRoute
+  '/dashboard/pastors-and-bishops': typeof DashboardPastorsAndBishopsIndexRoute
+  '/dashboard/visitors': typeof DashboardVisitorsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
   '/(auth)/': typeof authIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/children/': typeof DashboardChildrenIndexRoute
+  '/dashboard/committee/': typeof DashboardCommitteeIndexRoute
+  '/dashboard/deaconesses/': typeof DashboardDeaconessesIndexRoute
+  '/dashboard/departments/': typeof DashboardDepartmentsIndexRoute
+  '/dashboard/elders/': typeof DashboardEldersIndexRoute
+  '/dashboard/members/': typeof DashboardMembersIndexRoute
+  '/dashboard/pastors-and-bishops/': typeof DashboardPastorsAndBishopsIndexRoute
+  '/dashboard/visitors/': typeof DashboardVisitorsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/dashboard'
+    | '/'
+    | '/dashboard/'
+    | '/dashboard/children'
+    | '/dashboard/committee'
+    | '/dashboard/deaconesses'
+    | '/dashboard/departments'
+    | '/dashboard/elders'
+    | '/dashboard/members'
+    | '/dashboard/pastors-and-bishops'
+    | '/dashboard/visitors'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(auth)/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/dashboard/children'
+    | '/dashboard/committee'
+    | '/dashboard/deaconesses'
+    | '/dashboard/departments'
+    | '/dashboard/elders'
+    | '/dashboard/members'
+    | '/dashboard/pastors-and-bishops'
+    | '/dashboard/visitors'
+  id:
+    | '__root__'
+    | '/dashboard'
+    | '/(auth)/'
+    | '/dashboard/'
+    | '/dashboard/children/'
+    | '/dashboard/committee/'
+    | '/dashboard/deaconesses/'
+    | '/dashboard/departments/'
+    | '/dashboard/elders/'
+    | '/dashboard/members/'
+    | '/dashboard/pastors-and-bishops/'
+    | '/dashboard/visitors/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   authIndexRoute: typeof authIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  DashboardRouteRoute: DashboardRouteRouteWithChildren,
   authIndexRoute: authIndexRoute,
 }
 
@@ -77,11 +310,62 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/dashboard",
         "/(auth)/"
+      ]
+    },
+    "/dashboard": {
+      "filePath": "dashboard/route.tsx",
+      "children": [
+        "/dashboard/",
+        "/dashboard/children/",
+        "/dashboard/committee/",
+        "/dashboard/deaconesses/",
+        "/dashboard/departments/",
+        "/dashboard/elders/",
+        "/dashboard/members/",
+        "/dashboard/pastors-and-bishops/",
+        "/dashboard/visitors/"
       ]
     },
     "/(auth)/": {
       "filePath": "(auth)/index.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/children/": {
+      "filePath": "dashboard/children/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/committee/": {
+      "filePath": "dashboard/committee/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/deaconesses/": {
+      "filePath": "dashboard/deaconesses/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/departments/": {
+      "filePath": "dashboard/departments/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/elders/": {
+      "filePath": "dashboard/elders/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/members/": {
+      "filePath": "dashboard/members/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/pastors-and-bishops/": {
+      "filePath": "dashboard/pastors-and-bishops/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/visitors/": {
+      "filePath": "dashboard/visitors/index.tsx",
+      "parent": "/dashboard"
     }
   }
 }

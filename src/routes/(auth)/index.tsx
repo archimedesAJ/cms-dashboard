@@ -1,6 +1,6 @@
 import { Button, Input } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import * as z from 'zod';
 
 export const Route = createFileRoute('/(auth)/')({
@@ -22,12 +22,15 @@ function RouteComponent() {
 }
 
 function Form() {
+  const navigate = useNavigate();
+
   const form = useForm({
     onSubmit: async ({ value }) => {
       return new Promise(() => {
         setTimeout(() => {
           console.log(value);
           form.reset();
+          void navigate({ to: '/dashboard' });
         }, 3000);
       });
     },
