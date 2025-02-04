@@ -1,7 +1,6 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
-  Chip,
   Input,
   Pagination,
   Table,
@@ -11,45 +10,30 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/members/')({
+export const Route = createFileRoute('/(app)/dashboard/children')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: Member, columnKey: ColumnKey) => {
+  const renderCell = (data: Children, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name;
+        return data.name
       case 'age':
-        return data.age;
-      case 'email':
-        return data.email;
-      case 'phone':
-        return data.phone;
+        return data.age
       case 'birthday':
-        return data.birthday;
-      case 'location':
-        return data.location;
-      case 'status':
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColor[data.status as StatusKey]}
-            size="sm"
-            variant="flat"
-          >
-            {data.status}
-          </Chip>
-        );
-      case 'ministry':
-        return data.ministry;
+        return data.birthday
+      case 'guardian':
+        return data.guardian
+      case 'contact':
+        return data.contact
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -69,21 +53,21 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Members</h3>
+        <h3>Children</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search members"
+            placeholder="Search children"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -96,11 +80,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add Member</span>
+            <span className="mr-6">Add Child</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="Members table">
+      <Table aria-label="Children table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -108,7 +92,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={members}>
+        <TableBody items={children}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -129,84 +113,100 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
   { name: 'NAME', uid: 'name' },
   { name: 'AGE', uid: 'age' },
-  { name: 'EMAIL', uid: 'email' },
-  { name: 'CONTACT NUMBER', uid: 'phone' },
   { name: 'DATE OF BIRTH', uid: 'birthday' },
-  { name: 'LOCATION', uid: 'location' },
-  { name: 'STATUS', uid: 'status' },
-  { name: 'MINISTRY', uid: 'ministry' },
+  { name: 'GUARDIAN/PARENT', uid: 'guardian' },
+  { name: 'CONTACT NUMBER', uid: 'contact' },
   { name: 'ACTIONS', uid: 'actions' },
-];
-/* eg data for view details: image, title, gender, department */
+]
+/* eg data for view details: image, gender */
 
-type Member = (typeof members)[number];
-const members = [
+type Children = (typeof children)[number]
+const children = [
   {
     id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    phone: '123-456-7890',
-    birthday: '2022-01-15',
-    age: 45,
-    location: 'Haatso',
-    status: 'Active',
-    ministry: 'Worship',
+    name: 'Alice Smith',
+    age: 11,
+    birthday: '2013-05-15',
+    guardian: 'John Smith',
+    contact: '123-456-7890',
   },
   {
     id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    phone: '234-567-8901',
-    birthday: '2021-05-20',
-    age: 32,
-    location: 'Dansoman',
-    status: 'Active',
-    ministry: 'Children',
+    name: 'Bob Johnson',
+    age: 12,
+    birthday: '2012-03-22',
+    guardian: 'Mary Johnson',
+    contact: '234-567-8901',
   },
   {
     id: 3,
-    name: 'Bob Johnson',
-    email: 'bob@example.com',
-    phone: '345-678-9012',
-    birthday: '2023-03-10',
-    age: 67,
-    location: 'Ashongman',
-    status: 'Inactive',
-    ministry: 'Outreach',
+    name: 'Catherine Brown',
+    age: 11,
+    birthday: '2013-07-30',
+    guardian: 'Robert Brown',
+    contact: '345-678-9012',
   },
   {
     id: 4,
-    name: 'Alice Brown',
-    email: 'alice@example.com',
-    phone: '456-789-0123',
-    birthday: '2022-11-05',
-    age: 28,
-    location: 'Tema',
-    status: 'Active',
-    ministry: 'Prayer',
+    name: 'David Wilson',
+    age: 10,
+    birthday: '2014-11-10',
+    guardian: 'Linda Wilson',
+    contact: '456-789-0123',
   },
   {
     id: 5,
-    name: 'Charlie Davis',
-    email: 'charlie@example.com',
-    phone: '567-890-1234',
-    birthday: '2023-01-30',
-    age: 51,
-    location: 'Haatso',
-    status: 'Active',
-    ministry: 'Youth',
+    name: 'Eva Davis',
+    age: 4,
+    birthday: '2020-02-14',
+    guardian: 'James Davis',
+    contact: '567-890-1234',
   },
-];
-
-type StatusKey = keyof typeof statusColor;
-const statusColor = {
-  Active: 'success',
-  Inactive: 'warning',
-} as const;
+  {
+    id: 6,
+    name: 'Frank Miller',
+    age: 1,
+    birthday: '2024-09-05',
+    guardian: 'Susan Miller',
+    contact: '678-901-2345',
+  },
+  {
+    id: 7,
+    name: 'Grace Garcia',
+    age: 8,
+    birthday: '2016-12-01',
+    guardian: 'Michael Garcia',
+    contact: '789-012-3456',
+  },
+  {
+    id: 8,
+    name: 'Henry Martinez',
+    age: 5,
+    birthday: '2019-04-20',
+    guardian: 'Patricia Martinez',
+    contact: '890-123-4567',
+  },
+  {
+    id: 9,
+    name: 'Isabella Rodriguez',
+    age: 1,
+    birthday: '2024-08-15',
+    guardian: 'Carlos Rodriguez',
+    contact: '901-234-5678',
+  },
+  {
+    id: 10,
+    name: 'Jack Thompson',
+    age: 2,
+    birthday: '2023-11-30',
+    guardian: 'Laura Thompson',
+    contact: '012-345-6789',
+  },
+]

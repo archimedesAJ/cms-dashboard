@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
   Input,
@@ -10,30 +10,30 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/children/')({
+export const Route = createFileRoute('/(app)/dashboard/visitors')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: Children, columnKey: ColumnKey) => {
+  const renderCell = (data: Visitors, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name;
-      case 'age':
-        return data.age;
-      case 'birthday':
-        return data.birthday;
-      case 'guardian':
-        return data.guardian;
-      case 'contact':
-        return data.contact;
+        return data.name
+      case 'email':
+        return data.email
+      case 'phone':
+        return data.phone
+      case 'visit_date':
+        return data.visit_date
+      case 'service_attended':
+        return data.service_attended
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -53,21 +53,21 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Children</h3>
+        <h3>Visitors</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search children"
+            placeholder="Search visitors"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -80,11 +80,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add Child</span>
+            <span className="mr-6">Add Visitor</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="Children table">
+      <Table aria-label="Visitors table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -92,7 +92,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={children}>
+        <TableBody items={visitors}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -113,100 +113,85 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
   { name: 'NAME', uid: 'name' },
-  { name: 'AGE', uid: 'age' },
-  { name: 'DATE OF BIRTH', uid: 'birthday' },
-  { name: 'GUARDIAN/PARENT', uid: 'guardian' },
-  { name: 'CONTACT NUMBER', uid: 'contact' },
+  { name: 'EMAIL', uid: 'email' },
+  { name: 'CONTACT NUMBER', uid: 'phone' },
+  { name: 'VISIT DATE', uid: 'visit_date' },
+  { name: 'SERVICE ATTENDENDED', uid: 'service_attended' },
   { name: 'ACTIONS', uid: 'actions' },
-];
+]
 /* eg data for view details: image, gender */
 
-type Children = (typeof children)[number];
-const children = [
+type Visitors = (typeof visitors)[number]
+
+const visitors = [
   {
     id: 1,
-    name: 'Alice Smith',
-    age: 11,
-    birthday: '2013-05-15',
-    guardian: 'John Smith',
-    contact: '123-456-7890',
+    name: 'Emily Carter',
+    phone: '555-123-4567',
+    email: 'emilyc@example.com',
+    visit_date: '2025-01-15',
+    service_attended: 'Sunday Service',
   },
   {
     id: 2,
-    name: 'Bob Johnson',
-    age: 12,
-    birthday: '2012-03-22',
-    guardian: 'Mary Johnson',
-    contact: '234-567-8901',
+    name: 'James Smith',
+    phone: '555-234-5678',
+    email: 'jamess@example.com',
+    visit_date: '2025-01-20',
+    service_attended: 'Youth Night',
   },
   {
     id: 3,
-    name: 'Catherine Brown',
-    age: 11,
-    birthday: '2013-07-30',
-    guardian: 'Robert Brown',
-    contact: '345-678-9012',
+    name: 'Olivia Brown',
+    phone: '555-345-6789',
+    email: 'oliviab@example.com',
+    visit_date: '2025-01-25',
+    service_attended: 'Bible Study',
   },
   {
     id: 4,
-    name: 'David Wilson',
-    age: 10,
-    birthday: '2014-11-10',
-    guardian: 'Linda Wilson',
-    contact: '456-789-0123',
+    name: 'Michael Johnson',
+    phone: '555-456-7890',
+    email: 'michaelj@example.com',
+    visit_date: '2025-01-30',
+    service_attended: 'Sunday Service',
   },
   {
     id: 5,
-    name: 'Eva Davis',
-    age: 4,
-    birthday: '2020-02-14',
-    guardian: 'James Davis',
-    contact: '567-890-1234',
+    name: 'Sophia Williams',
+    phone: '555-567-8901',
+    email: 'sophiaw@example.com',
+    visit_date: '2025-02-01',
+    service_attended: 'Evening Prayer',
   },
   {
     id: 6,
-    name: 'Frank Miller',
-    age: 1,
-    birthday: '2024-09-05',
-    guardian: 'Susan Miller',
-    contact: '678-901-2345',
+    name: 'Daniel Garcia',
+    phone: '555-678-9012',
+    email: 'danielg@example.com',
+    visit_date: '2025-02-03',
+    service_attended: 'Choir Practice',
   },
   {
     id: 7,
-    name: 'Grace Garcia',
-    age: 8,
-    birthday: '2016-12-01',
-    guardian: 'Michael Garcia',
-    contact: '789-012-3456',
+    name: 'Ava Martinez',
+    phone: '555-789-0123',
+    email: 'avam@example.com',
+    visit_date: '2025-02-05',
+    service_attended: 'Prayer Meeting',
   },
   {
     id: 8,
-    name: 'Henry Martinez',
-    age: 5,
-    birthday: '2019-04-20',
-    guardian: 'Patricia Martinez',
-    contact: '890-123-4567',
+    name: 'William Rodriguez',
+    phone: '555-890-1234',
+    email: 'williamr@example.com',
+    visit_date: '2025-02-07',
+    service_attended: 'Sunday Service',
   },
-  {
-    id: 9,
-    name: 'Isabella Rodriguez',
-    age: 1,
-    birthday: '2024-08-15',
-    guardian: 'Carlos Rodriguez',
-    contact: '901-234-5678',
-  },
-  {
-    id: 10,
-    name: 'Jack Thompson',
-    age: 2,
-    birthday: '2023-11-30',
-    guardian: 'Laura Thompson',
-    contact: '012-345-6789',
-  },
-];
+]

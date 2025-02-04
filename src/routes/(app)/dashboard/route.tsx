@@ -11,14 +11,14 @@ import {
   DropdownTrigger,
   useDisclosure,
   User,
-} from '@heroui/react';
+} from '@heroui/react'
 import {
   createFileRoute,
   Link,
   linkOptions,
   Outlet,
   useNavigate,
-} from '@tanstack/react-router';
+} from '@tanstack/react-router'
 import {
   BabyIcon,
   Building2Icon,
@@ -32,22 +32,22 @@ import {
   UserCogIcon,
   UserPlusIcon,
   UsersIcon,
-} from 'lucide-react';
-import * as React from 'react';
+} from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/(app)/dashboard')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false)
 
   const toggleSideBar = () => {
-    setIsSidebarCollapsed((prev) => !prev);
-  };
+    setIsSidebarCollapsed((prev) => !prev)
+  }
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const navigate = useNavigate();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const navigate = useNavigate()
 
   return (
     <div className="dashboard-container min-h-dvh bg-content3">
@@ -132,7 +132,7 @@ function RouteComponent() {
                                 <p className="truncate">{link.label}</p>
                               </Button>
                             </li>
-                          );
+                          )
                         })}
                       </ul>
                     </nav>
@@ -162,7 +162,7 @@ function RouteComponent() {
               key="logout"
               color="danger"
               onPress={() => {
-                void navigate({ to: '/' });
+                void navigate({ to: '/' })
               }}
             >
               Log Out
@@ -225,7 +225,7 @@ function RouteComponent() {
                   </p>
                 </Button>
               </li>
-            );
+            )
           })}
         </ul>
       </aside>
@@ -242,7 +242,7 @@ function RouteComponent() {
         <span>All Rights Reserved</span>
       </footer>
     </div>
-  );
+  )
 }
 
 const links = linkOptions([
@@ -291,4 +291,4 @@ const links = linkOptions([
     label: 'Pastors & Bishops',
     icon: <ChurchIcon />,
   },
-]);
+])

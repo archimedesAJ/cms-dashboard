@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
   Chip,
@@ -11,30 +11,30 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/pastors-and-bishops/')({
+export const Route = createFileRoute('/(app)/dashboard/deaconesses')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: BishopAndPastor, columnKey: ColumnKey) => {
+  const renderCell = (data: Deacon, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name;
+        return data.name
       case 'age':
-        return data.age;
+        return data.age
       case 'years_served':
-        return data.years_served;
+        return data.years_served
       case 'email':
-        return data.email;
+        return data.email
       case 'phone':
-        return data.phone;
+        return data.phone
       case 'status':
         return (
           <Chip
@@ -45,7 +45,7 @@ function RouteComponent() {
           >
             {data.status}
           </Chip>
-        );
+        )
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -59,27 +59,27 @@ function RouteComponent() {
                 <EditIcon />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete bishopAndPastor">
+            <Tooltip color="danger" content="Delete deacon">
               <span className="cursor-pointer text-lg text-danger active:opacity-50">
                 <DeleteIcon />
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Bishops & Pastors</h3>
+        <h3>Deaconesses</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search..."
+            placeholder="Search deaconesses"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -92,11 +92,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add</span>
+            <span className="mr-6">Add Deaconess</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="BishopsAndPastors table">
+      <Table aria-label="Deaconesses table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -104,7 +104,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={bishopsAndPastors}>
+        <TableBody items={deaconesses}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -125,10 +125,10 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
   { name: 'NAME', uid: 'name' },
   { name: 'AGE', uid: 'age' },
@@ -136,14 +136,14 @@ const columns = [
   { name: 'EMAIL', uid: 'email' },
   { name: 'CONTACT NUMBER', uid: 'phone' },
   { name: 'STATUS', uid: 'status' },
-];
+]
 /* eg data for view details: date established, contact email, contact number */
 
-type BishopAndPastor = (typeof bishopsAndPastors)[number];
-const bishopsAndPastors = [
+type Deacon = (typeof deaconesses)[number]
+const deaconesses = [
   {
     id: '1',
-    name: 'John Smith',
+    name: 'Mary Jane',
     age: 65,
     years_served: 15,
     phone: '123-456-7890',
@@ -159,10 +159,10 @@ const bishopsAndPastors = [
     email: 'mary.johnson@church.org',
     status: 'Active',
   },
-];
+]
 
-type StatusKey = keyof typeof statusColor;
+type StatusKey = keyof typeof statusColor
 const statusColor = {
   Active: 'success',
   Inactive: 'warning',
-} as const;
+} as const

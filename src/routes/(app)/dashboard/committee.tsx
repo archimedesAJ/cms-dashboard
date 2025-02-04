@@ -1,7 +1,6 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
-  Chip,
   Input,
   Pagination,
   Table,
@@ -11,41 +10,28 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/deaconesses/')({
+export const Route = createFileRoute('/(app)/dashboard/committee')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: Deacon, columnKey: ColumnKey) => {
+  const renderCell = (data: Committee, columnKey: ColumnKey) => {
     switch (columnKey) {
-      case 'name':
-        return data.name;
-      case 'age':
-        return data.age;
-      case 'years_served':
-        return data.years_served;
-      case 'email':
-        return data.email;
-      case 'phone':
-        return data.phone;
-      case 'status':
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColor[data.status as StatusKey]}
-            size="sm"
-            variant="flat"
-          >
-            {data.status}
-          </Chip>
-        );
+      case 'committee_name':
+        return data.committee_name
+      case 'chairperson':
+        return data.chairperson
+      case 'members':
+        return data.members
+      case 'meeting_frequency':
+        return data.meeting_frequency
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -59,27 +45,27 @@ function RouteComponent() {
                 <EditIcon />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete deacon">
+            <Tooltip color="danger" content="Delete committee">
               <span className="cursor-pointer text-lg text-danger active:opacity-50">
                 <DeleteIcon />
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Deaconesses</h3>
+        <h3>Committees</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search deaconesses"
+            placeholder="Search committees"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -92,11 +78,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add Deaconess</span>
+            <span className="mr-6">Add Committee</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="Deaconesses table">
+      <Table aria-label="Committees table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -104,7 +90,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={deaconesses}>
+        <TableBody items={committees}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -125,44 +111,32 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
-  { name: 'NAME', uid: 'name' },
-  { name: 'AGE', uid: 'age' },
-  { name: 'YEARS SERVED', uid: 'years_served' },
-  { name: 'EMAIL', uid: 'email' },
-  { name: 'CONTACT NUMBER', uid: 'phone' },
-  { name: 'STATUS', uid: 'status' },
-];
+  { name: 'COMMITTEE NAME', uid: 'committee_name' },
+  { name: 'CHAIRPERSON', uid: 'chairperson' },
+  { name: 'MEMBERS', uid: 'members' },
+  { name: 'MEETING FREQUENCY', uid: 'meeting_frequency' },
+]
 /* eg data for view details: date established, contact email, contact number */
 
-type Deacon = (typeof deaconesses)[number];
-const deaconesses = [
+type Committee = (typeof committees)[number]
+const committees = [
   {
     id: '1',
-    name: 'Mary Jane',
-    age: 65,
-    years_served: 15,
-    phone: '123-456-7890',
-    email: 'john.smith@church.org',
-    status: 'Active',
+    committee_name: 'Finance Committee',
+    chairperson: 'John Doe',
+    members: 10,
+    meeting_frequency: 'Monthly',
   },
   {
     id: '2',
-    name: 'Mary Johnson',
-    age: 58,
-    years_served: 10,
-    phone: '234-567-8901',
-    email: 'mary.johnson@church.org',
-    status: 'Active',
+    committee_name: 'Worship Planning Committee',
+    chairperson: 'Emily Davis',
+    members: 8,
+    meeting_frequency: 'Weekly',
   },
-];
-
-type StatusKey = keyof typeof statusColor;
-const statusColor = {
-  Active: 'success',
-  Inactive: 'warning',
-} as const;
+]

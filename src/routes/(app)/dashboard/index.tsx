@@ -1,5 +1,5 @@
-import { Card, CardBody } from '@heroui/react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { Card, CardBody } from '@heroui/react'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   BabyIcon,
   Building2Icon,
@@ -11,11 +11,11 @@ import {
   UsersIcon,
   UsersRoundIcon,
   Volume2Icon,
-} from 'lucide-react';
+} from 'lucide-react'
 
-export const Route = createFileRoute('/dashboard/')({
+export const Route = createFileRoute('/(app)/dashboard/')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
   return (
@@ -221,5 +221,5 @@ function RouteComponent() {
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

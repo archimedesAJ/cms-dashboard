@@ -1,6 +1,7 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
+  Chip,
   Input,
   Pagination,
   Table,
@@ -10,30 +11,45 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/visitors/')({
+export const Route = createFileRoute('/(app)/dashboard/members')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: Visitors, columnKey: ColumnKey) => {
+  const renderCell = (data: Member, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name;
+        return data.name
+      case 'age':
+        return data.age
       case 'email':
-        return data.email;
+        return data.email
       case 'phone':
-        return data.phone;
-      case 'visit_date':
-        return data.visit_date;
-      case 'service_attended':
-        return data.service_attended;
+        return data.phone
+      case 'birthday':
+        return data.birthday
+      case 'location':
+        return data.location
+      case 'status':
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColor[data.status as StatusKey]}
+            size="sm"
+            variant="flat"
+          >
+            {data.status}
+          </Chip>
+        )
+      case 'ministry':
+        return data.ministry
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -53,21 +69,21 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Visitors</h3>
+        <h3>Members</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search visitors"
+            placeholder="Search members"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -80,11 +96,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add Visitor</span>
+            <span className="mr-6">Add Member</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="Visitors table">
+      <Table aria-label="Members table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -92,7 +108,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={visitors}>
+        <TableBody items={members}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -113,85 +129,84 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
   { name: 'NAME', uid: 'name' },
+  { name: 'AGE', uid: 'age' },
   { name: 'EMAIL', uid: 'email' },
   { name: 'CONTACT NUMBER', uid: 'phone' },
-  { name: 'VISIT DATE', uid: 'visit_date' },
-  { name: 'SERVICE ATTENDENDED', uid: 'service_attended' },
+  { name: 'DATE OF BIRTH', uid: 'birthday' },
+  { name: 'LOCATION', uid: 'location' },
+  { name: 'STATUS', uid: 'status' },
+  { name: 'MINISTRY', uid: 'ministry' },
   { name: 'ACTIONS', uid: 'actions' },
-];
-/* eg data for view details: image, gender */
+]
+/* eg data for view details: image, title, gender, department */
 
-type Visitors = (typeof visitors)[number];
-
-const visitors = [
+type Member = (typeof members)[number]
+const members = [
   {
     id: 1,
-    name: 'Emily Carter',
-    phone: '555-123-4567',
-    email: 'emilyc@example.com',
-    visit_date: '2025-01-15',
-    service_attended: 'Sunday Service',
+    name: 'John Doe',
+    email: 'john@example.com',
+    phone: '123-456-7890',
+    birthday: '2022-01-15',
+    age: 45,
+    location: 'Haatso',
+    status: 'Active',
+    ministry: 'Worship',
   },
   {
     id: 2,
-    name: 'James Smith',
-    phone: '555-234-5678',
-    email: 'jamess@example.com',
-    visit_date: '2025-01-20',
-    service_attended: 'Youth Night',
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    phone: '234-567-8901',
+    birthday: '2021-05-20',
+    age: 32,
+    location: 'Dansoman',
+    status: 'Active',
+    ministry: 'Children',
   },
   {
     id: 3,
-    name: 'Olivia Brown',
-    phone: '555-345-6789',
-    email: 'oliviab@example.com',
-    visit_date: '2025-01-25',
-    service_attended: 'Bible Study',
+    name: 'Bob Johnson',
+    email: 'bob@example.com',
+    phone: '345-678-9012',
+    birthday: '2023-03-10',
+    age: 67,
+    location: 'Ashongman',
+    status: 'Inactive',
+    ministry: 'Outreach',
   },
   {
     id: 4,
-    name: 'Michael Johnson',
-    phone: '555-456-7890',
-    email: 'michaelj@example.com',
-    visit_date: '2025-01-30',
-    service_attended: 'Sunday Service',
+    name: 'Alice Brown',
+    email: 'alice@example.com',
+    phone: '456-789-0123',
+    birthday: '2022-11-05',
+    age: 28,
+    location: 'Tema',
+    status: 'Active',
+    ministry: 'Prayer',
   },
   {
     id: 5,
-    name: 'Sophia Williams',
-    phone: '555-567-8901',
-    email: 'sophiaw@example.com',
-    visit_date: '2025-02-01',
-    service_attended: 'Evening Prayer',
+    name: 'Charlie Davis',
+    email: 'charlie@example.com',
+    phone: '567-890-1234',
+    birthday: '2023-01-30',
+    age: 51,
+    location: 'Haatso',
+    status: 'Active',
+    ministry: 'Youth',
   },
-  {
-    id: 6,
-    name: 'Daniel Garcia',
-    phone: '555-678-9012',
-    email: 'danielg@example.com',
-    visit_date: '2025-02-03',
-    service_attended: 'Choir Practice',
-  },
-  {
-    id: 7,
-    name: 'Ava Martinez',
-    phone: '555-789-0123',
-    email: 'avam@example.com',
-    visit_date: '2025-02-05',
-    service_attended: 'Prayer Meeting',
-  },
-  {
-    id: 8,
-    name: 'William Rodriguez',
-    phone: '555-890-1234',
-    email: 'williamr@example.com',
-    visit_date: '2025-02-07',
-    service_attended: 'Sunday Service',
-  },
-];
+]
+
+type StatusKey = keyof typeof statusColor
+const statusColor = {
+  Active: 'success',
+  Inactive: 'warning',
+} as const

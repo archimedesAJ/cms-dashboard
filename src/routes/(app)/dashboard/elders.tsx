@@ -1,6 +1,7 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
 import {
   Button,
+  Chip,
   Input,
   Pagination,
   Table,
@@ -10,28 +11,41 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
+} from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { PlusIcon, SearchIcon } from 'lucide-react'
+import * as React from 'react'
 
-export const Route = createFileRoute('/dashboard/departments/')({
+export const Route = createFileRoute('/(app)/dashboard/elders')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const renderCell = (data: Department, columnKey: ColumnKey) => {
+  const renderCell = (data: Elder, columnKey: ColumnKey) => {
     switch (columnKey) {
-      case 'department_name':
-        return data.department_name;
-      case 'leader':
-        return data.leader;
-      case 'members':
-        return data.members;
-      case 'meeting_day':
-        return data.meeting_day;
+      case 'name':
+        return data.name
+      case 'age':
+        return data.age
+      case 'years_served':
+        return data.years_served
+      case 'email':
+        return data.email
+      case 'phone':
+        return data.phone
+      case 'status':
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColor[data.status as StatusKey]}
+            size="sm"
+            variant="flat"
+          >
+            {data.status}
+          </Chip>
+        )
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -45,27 +59,27 @@ function RouteComponent() {
                 <EditIcon />
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete department">
+            <Tooltip color="danger" content="Delete elder">
               <span className="cursor-pointer text-lg text-danger active:opacity-50">
                 <DeleteIcon />
               </span>
             </Tooltip>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl bg-background p-4">
-        <h3>Departments</h3>
+        <h3>Elders</h3>
 
         <div className="flex items-center gap-x-4">
           <Input
             labelPlacement="outside"
-            placeholder="Search departments"
+            placeholder="Search elders"
             variant="bordered"
             startContent={
               <SearchIcon className="pointer-events-none size-5 flex-shrink-0 text-default-400" />
@@ -78,11 +92,11 @@ function RouteComponent() {
             className="inline-grid grid-cols-[auto,1fr] md:w-fit"
             startContent={<PlusIcon className="ml-5 size-4" />}
           >
-            <span className="mr-6">Add Department</span>
+            <span className="mr-6">Add Elder</span>
           </Button>
         </div>
       </div>
-      <Table aria-label="Departments table">
+      <Table aria-label="Elders table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.uid} align="start">
@@ -90,7 +104,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={departments}>
+        <TableBody items={elders}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -111,74 +125,44 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  );
+  )
 }
 
-type ColumnKey = (typeof columns)[number]['uid'];
+type ColumnKey = (typeof columns)[number]['uid']
 const columns = [
-  { name: 'DEPARTMENT NAME', uid: 'department_name' },
-  { name: 'LEADER', uid: 'leader' },
-  { name: 'MEMBERS', uid: 'members' },
-  { name: 'MEETING DAY', uid: 'meeting_day' },
-];
+  { name: 'NAME', uid: 'name' },
+  { name: 'AGE', uid: 'age' },
+  { name: 'YEARS SERVED', uid: 'years_served' },
+  { name: 'EMAIL', uid: 'email' },
+  { name: 'CONTACT NUMBER', uid: 'phone' },
+  { name: 'STATUS', uid: 'status' },
+]
 /* eg data for view details: date established, contact email, contact number */
 
-type Department = (typeof departments)[number];
-const departments = [
+type Elder = (typeof elders)[number]
+const elders = [
   {
-    id: 1,
-    department_name: 'Worship Ministry',
-    leader: 'Pastor Mark',
-    members: 25,
-    meeting_day: 'Sunday',
+    id: '1',
+    name: 'John Smith',
+    age: 65,
+    years_served: 15,
+    phone: '123-456-7890',
+    email: 'john.smith@church.org',
+    status: 'Active',
   },
   {
-    id: 2,
-    department_name: 'Youth Ministry',
-    leader: 'Sarah Johnson',
-    members: 15,
-    meeting_day: 'Friday',
+    id: '2',
+    name: 'Mary Johnson',
+    age: 58,
+    years_served: 10,
+    phone: '234-567-8901',
+    email: 'mary.johnson@church.org',
+    status: 'Active',
   },
-  {
-    id: 3,
-    department_name: 'Outreach Ministry',
-    leader: 'David Kim',
-    members: 30,
-    meeting_day: 'Saturday',
-  },
-  {
-    id: 4,
-    department_name: "Children's Ministry",
-    leader: 'Emily Carter',
-    members: 20,
-    meeting_day: 'Sunday',
-  },
-  {
-    id: 5,
-    department_name: 'Bible Study Group',
-    leader: 'Michael Johnson',
-    members: 12,
-    meeting_day: 'Wednesday',
-  },
-  {
-    id: 6,
-    department_name: 'Hospitality Team',
-    leader: 'Olivia Brown',
-    members: 10,
-    meeting_day: 'Monday',
-  },
-  {
-    id: 7,
-    department_name: 'Prayer Ministry',
-    leader: 'Grace Martinez',
-    members: 8,
-    meeting_day: 'Thursday',
-  },
-  {
-    id: 9,
-    department_name: 'Media Team',
-    leader: 'Liam Thompson',
-    members: 18,
-    meeting_day: 'Friday',
-  },
-];
+]
+
+type StatusKey = keyof typeof statusColor
+const statusColor = {
+  Active: 'success',
+  Inactive: 'warning',
+} as const
