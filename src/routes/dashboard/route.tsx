@@ -17,6 +17,7 @@ import {
   Link,
   linkOptions,
   Outlet,
+  useNavigate,
 } from '@tanstack/react-router';
 import {
   BabyIcon,
@@ -46,6 +47,7 @@ function RouteComponent() {
   };
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const navigate = useNavigate();
 
   return (
     <div className="dashboard-container min-h-dvh bg-content3">
@@ -156,7 +158,13 @@ function RouteComponent() {
           </DropdownTrigger>
           <DropdownMenu aria-label="User Actions" variant="flat">
             <DropdownItem key="settings">My Profile</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onPress={() => {
+                void navigate({ to: '/' });
+              }}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>
