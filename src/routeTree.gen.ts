@@ -16,12 +16,14 @@ import { Route as appDashboardRouteImport } from './routes/(app)/dashboard/route
 import { Route as appDashboardIndexImport } from './routes/(app)/dashboard/index'
 import { Route as appDashboardVisitorsImport } from './routes/(app)/dashboard/visitors'
 import { Route as appDashboardPastorsAndBishopsImport } from './routes/(app)/dashboard/pastors-and-bishops'
-import { Route as appDashboardMembersImport } from './routes/(app)/dashboard/members'
 import { Route as appDashboardEldersImport } from './routes/(app)/dashboard/elders'
 import { Route as appDashboardDepartmentsImport } from './routes/(app)/dashboard/departments'
 import { Route as appDashboardDeaconessesImport } from './routes/(app)/dashboard/deaconesses'
 import { Route as appDashboardCommitteeImport } from './routes/(app)/dashboard/committee'
 import { Route as appDashboardChildrenImport } from './routes/(app)/dashboard/children'
+import { Route as appDashboardMembersIndexImport } from './routes/(app)/dashboard/members/index'
+import { Route as appDashboardMembersCreateImport } from './routes/(app)/dashboard/members/create'
+import { Route as appDashboardMembersProductIdEditImport } from './routes/(app)/dashboard/members/$productId.edit'
 
 // Create/Update Routes
 
@@ -56,12 +58,6 @@ const appDashboardPastorsAndBishopsRoute =
     getParentRoute: () => appDashboardRouteRoute,
   } as any)
 
-const appDashboardMembersRoute = appDashboardMembersImport.update({
-  id: '/members',
-  path: '/members',
-  getParentRoute: () => appDashboardRouteRoute,
-} as any)
-
 const appDashboardEldersRoute = appDashboardEldersImport.update({
   id: '/elders',
   path: '/elders',
@@ -91,6 +87,25 @@ const appDashboardChildrenRoute = appDashboardChildrenImport.update({
   path: '/children',
   getParentRoute: () => appDashboardRouteRoute,
 } as any)
+
+const appDashboardMembersIndexRoute = appDashboardMembersIndexImport.update({
+  id: '/members/',
+  path: '/members/',
+  getParentRoute: () => appDashboardRouteRoute,
+} as any)
+
+const appDashboardMembersCreateRoute = appDashboardMembersCreateImport.update({
+  id: '/members/create',
+  path: '/members/create',
+  getParentRoute: () => appDashboardRouteRoute,
+} as any)
+
+const appDashboardMembersProductIdEditRoute =
+  appDashboardMembersProductIdEditImport.update({
+    id: '/members/$productId/edit',
+    path: '/members/$productId/edit',
+    getParentRoute: () => appDashboardRouteRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -145,13 +160,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appDashboardEldersImport
       parentRoute: typeof appDashboardRouteImport
     }
-    '/(app)/dashboard/members': {
-      id: '/(app)/dashboard/members'
-      path: '/members'
-      fullPath: '/dashboard/members'
-      preLoaderRoute: typeof appDashboardMembersImport
-      parentRoute: typeof appDashboardRouteImport
-    }
     '/(app)/dashboard/pastors-and-bishops': {
       id: '/(app)/dashboard/pastors-and-bishops'
       path: '/pastors-and-bishops'
@@ -173,6 +181,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appDashboardIndexImport
       parentRoute: typeof appDashboardRouteImport
     }
+    '/(app)/dashboard/members/create': {
+      id: '/(app)/dashboard/members/create'
+      path: '/members/create'
+      fullPath: '/dashboard/members/create'
+      preLoaderRoute: typeof appDashboardMembersCreateImport
+      parentRoute: typeof appDashboardRouteImport
+    }
+    '/(app)/dashboard/members/': {
+      id: '/(app)/dashboard/members/'
+      path: '/members'
+      fullPath: '/dashboard/members'
+      preLoaderRoute: typeof appDashboardMembersIndexImport
+      parentRoute: typeof appDashboardRouteImport
+    }
+    '/(app)/dashboard/members/$productId/edit': {
+      id: '/(app)/dashboard/members/$productId/edit'
+      path: '/members/$productId/edit'
+      fullPath: '/dashboard/members/$productId/edit'
+      preLoaderRoute: typeof appDashboardMembersProductIdEditImport
+      parentRoute: typeof appDashboardRouteImport
+    }
   }
 }
 
@@ -184,10 +213,12 @@ interface appDashboardRouteRouteChildren {
   appDashboardDeaconessesRoute: typeof appDashboardDeaconessesRoute
   appDashboardDepartmentsRoute: typeof appDashboardDepartmentsRoute
   appDashboardEldersRoute: typeof appDashboardEldersRoute
-  appDashboardMembersRoute: typeof appDashboardMembersRoute
   appDashboardPastorsAndBishopsRoute: typeof appDashboardPastorsAndBishopsRoute
   appDashboardVisitorsRoute: typeof appDashboardVisitorsRoute
   appDashboardIndexRoute: typeof appDashboardIndexRoute
+  appDashboardMembersCreateRoute: typeof appDashboardMembersCreateRoute
+  appDashboardMembersIndexRoute: typeof appDashboardMembersIndexRoute
+  appDashboardMembersProductIdEditRoute: typeof appDashboardMembersProductIdEditRoute
 }
 
 const appDashboardRouteRouteChildren: appDashboardRouteRouteChildren = {
@@ -196,10 +227,12 @@ const appDashboardRouteRouteChildren: appDashboardRouteRouteChildren = {
   appDashboardDeaconessesRoute: appDashboardDeaconessesRoute,
   appDashboardDepartmentsRoute: appDashboardDepartmentsRoute,
   appDashboardEldersRoute: appDashboardEldersRoute,
-  appDashboardMembersRoute: appDashboardMembersRoute,
   appDashboardPastorsAndBishopsRoute: appDashboardPastorsAndBishopsRoute,
   appDashboardVisitorsRoute: appDashboardVisitorsRoute,
   appDashboardIndexRoute: appDashboardIndexRoute,
+  appDashboardMembersCreateRoute: appDashboardMembersCreateRoute,
+  appDashboardMembersIndexRoute: appDashboardMembersIndexRoute,
+  appDashboardMembersProductIdEditRoute: appDashboardMembersProductIdEditRoute,
 }
 
 const appDashboardRouteRouteWithChildren =
@@ -213,10 +246,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/dashboard/elders': typeof appDashboardEldersRoute
-  '/dashboard/members': typeof appDashboardMembersRoute
   '/dashboard/pastors-and-bishops': typeof appDashboardPastorsAndBishopsRoute
   '/dashboard/visitors': typeof appDashboardVisitorsRoute
   '/dashboard/': typeof appDashboardIndexRoute
+  '/dashboard/members/create': typeof appDashboardMembersCreateRoute
+  '/dashboard/members': typeof appDashboardMembersIndexRoute
+  '/dashboard/members/$productId/edit': typeof appDashboardMembersProductIdEditRoute
 }
 
 export interface FileRoutesByTo {
@@ -226,10 +261,12 @@ export interface FileRoutesByTo {
   '/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/dashboard/elders': typeof appDashboardEldersRoute
-  '/dashboard/members': typeof appDashboardMembersRoute
   '/dashboard/pastors-and-bishops': typeof appDashboardPastorsAndBishopsRoute
   '/dashboard/visitors': typeof appDashboardVisitorsRoute
   '/dashboard': typeof appDashboardIndexRoute
+  '/dashboard/members/create': typeof appDashboardMembersCreateRoute
+  '/dashboard/members': typeof appDashboardMembersIndexRoute
+  '/dashboard/members/$productId/edit': typeof appDashboardMembersProductIdEditRoute
 }
 
 export interface FileRoutesById {
@@ -241,10 +278,12 @@ export interface FileRoutesById {
   '/(app)/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/(app)/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/(app)/dashboard/elders': typeof appDashboardEldersRoute
-  '/(app)/dashboard/members': typeof appDashboardMembersRoute
   '/(app)/dashboard/pastors-and-bishops': typeof appDashboardPastorsAndBishopsRoute
   '/(app)/dashboard/visitors': typeof appDashboardVisitorsRoute
   '/(app)/dashboard/': typeof appDashboardIndexRoute
+  '/(app)/dashboard/members/create': typeof appDashboardMembersCreateRoute
+  '/(app)/dashboard/members/': typeof appDashboardMembersIndexRoute
+  '/(app)/dashboard/members/$productId/edit': typeof appDashboardMembersProductIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -257,10 +296,12 @@ export interface FileRouteTypes {
     | '/dashboard/deaconesses'
     | '/dashboard/departments'
     | '/dashboard/elders'
-    | '/dashboard/members'
     | '/dashboard/pastors-and-bishops'
     | '/dashboard/visitors'
     | '/dashboard/'
+    | '/dashboard/members/create'
+    | '/dashboard/members'
+    | '/dashboard/members/$productId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -269,10 +310,12 @@ export interface FileRouteTypes {
     | '/dashboard/deaconesses'
     | '/dashboard/departments'
     | '/dashboard/elders'
-    | '/dashboard/members'
     | '/dashboard/pastors-and-bishops'
     | '/dashboard/visitors'
     | '/dashboard'
+    | '/dashboard/members/create'
+    | '/dashboard/members'
+    | '/dashboard/members/$productId/edit'
   id:
     | '__root__'
     | '/(app)/dashboard'
@@ -282,10 +325,12 @@ export interface FileRouteTypes {
     | '/(app)/dashboard/deaconesses'
     | '/(app)/dashboard/departments'
     | '/(app)/dashboard/elders'
-    | '/(app)/dashboard/members'
     | '/(app)/dashboard/pastors-and-bishops'
     | '/(app)/dashboard/visitors'
     | '/(app)/dashboard/'
+    | '/(app)/dashboard/members/create'
+    | '/(app)/dashboard/members/'
+    | '/(app)/dashboard/members/$productId/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -321,10 +366,12 @@ export const routeTree = rootRoute
         "/(app)/dashboard/deaconesses",
         "/(app)/dashboard/departments",
         "/(app)/dashboard/elders",
-        "/(app)/dashboard/members",
         "/(app)/dashboard/pastors-and-bishops",
         "/(app)/dashboard/visitors",
-        "/(app)/dashboard/"
+        "/(app)/dashboard/",
+        "/(app)/dashboard/members/create",
+        "/(app)/dashboard/members/",
+        "/(app)/dashboard/members/$productId/edit"
       ]
     },
     "/(auth)/": {
@@ -350,10 +397,6 @@ export const routeTree = rootRoute
       "filePath": "(app)/dashboard/elders.tsx",
       "parent": "/(app)/dashboard"
     },
-    "/(app)/dashboard/members": {
-      "filePath": "(app)/dashboard/members.tsx",
-      "parent": "/(app)/dashboard"
-    },
     "/(app)/dashboard/pastors-and-bishops": {
       "filePath": "(app)/dashboard/pastors-and-bishops.tsx",
       "parent": "/(app)/dashboard"
@@ -364,6 +407,18 @@ export const routeTree = rootRoute
     },
     "/(app)/dashboard/": {
       "filePath": "(app)/dashboard/index.tsx",
+      "parent": "/(app)/dashboard"
+    },
+    "/(app)/dashboard/members/create": {
+      "filePath": "(app)/dashboard/members/create.tsx",
+      "parent": "/(app)/dashboard"
+    },
+    "/(app)/dashboard/members/": {
+      "filePath": "(app)/dashboard/members/index.tsx",
+      "parent": "/(app)/dashboard"
+    },
+    "/(app)/dashboard/members/$productId/edit": {
+      "filePath": "(app)/dashboard/members/$productId.edit.tsx",
       "parent": "/(app)/dashboard"
     }
   }

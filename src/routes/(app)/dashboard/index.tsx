@@ -1,5 +1,5 @@
-import { Card, CardBody } from '@heroui/react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Card, CardBody } from '@heroui/react';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   BabyIcon,
   Building2Icon,
@@ -11,11 +11,11 @@ import {
   UsersIcon,
   UsersRoundIcon,
   Volume2Icon,
-} from 'lucide-react'
+} from 'lucide-react';
 
 export const Route = createFileRoute('/(app)/dashboard/')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -83,7 +83,7 @@ function RouteComponent() {
       <Card>
         <CardBody className="space-y-6 px-6 py-8">
           <div className="flex items-center justify-between">
-            <h4>Prayer Ministry</h4>
+            <h4>Prayer Department</h4>
 
             <Link
               to="/dashboard/departments"
@@ -183,7 +183,7 @@ function RouteComponent() {
       <Card>
         <CardBody className="space-y-6 px-6 py-8">
           <div className="flex items-center justify-between">
-            <h4>IT Department</h4>
+            <h4>IT & Media Department</h4>
 
             <Link
               to="/dashboard/departments"
@@ -221,5 +221,5 @@ function RouteComponent() {
         </CardBody>
       </Card>
     </div>
-  )
+  );
 }
