@@ -19,7 +19,7 @@ import { Route as appDashboardPastorsAndBishopsImport } from './routes/(app)/das
 import { Route as appDashboardEldersImport } from './routes/(app)/dashboard/elders'
 import { Route as appDashboardDepartmentsImport } from './routes/(app)/dashboard/departments'
 import { Route as appDashboardDeaconessesImport } from './routes/(app)/dashboard/deaconesses'
-import { Route as appDashboardCommitteeImport } from './routes/(app)/dashboard/committee'
+import { Route as appDashboardCommitteesImport } from './routes/(app)/dashboard/committees'
 import { Route as appDashboardChildrenImport } from './routes/(app)/dashboard/children'
 import { Route as appDashboardMembersIndexImport } from './routes/(app)/dashboard/members/index'
 import { Route as appDashboardMembersCreateImport } from './routes/(app)/dashboard/members/create'
@@ -76,9 +76,9 @@ const appDashboardDeaconessesRoute = appDashboardDeaconessesImport.update({
   getParentRoute: () => appDashboardRouteRoute,
 } as any)
 
-const appDashboardCommitteeRoute = appDashboardCommitteeImport.update({
-  id: '/committee',
-  path: '/committee',
+const appDashboardCommitteesRoute = appDashboardCommitteesImport.update({
+  id: '/committees',
+  path: '/committees',
   getParentRoute: () => appDashboardRouteRoute,
 } as any)
 
@@ -132,11 +132,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appDashboardChildrenImport
       parentRoute: typeof appDashboardRouteImport
     }
-    '/(app)/dashboard/committee': {
-      id: '/(app)/dashboard/committee'
-      path: '/committee'
-      fullPath: '/dashboard/committee'
-      preLoaderRoute: typeof appDashboardCommitteeImport
+    '/(app)/dashboard/committees': {
+      id: '/(app)/dashboard/committees'
+      path: '/committees'
+      fullPath: '/dashboard/committees'
+      preLoaderRoute: typeof appDashboardCommitteesImport
       parentRoute: typeof appDashboardRouteImport
     }
     '/(app)/dashboard/deaconesses': {
@@ -209,7 +209,7 @@ declare module '@tanstack/react-router' {
 
 interface appDashboardRouteRouteChildren {
   appDashboardChildrenRoute: typeof appDashboardChildrenRoute
-  appDashboardCommitteeRoute: typeof appDashboardCommitteeRoute
+  appDashboardCommitteesRoute: typeof appDashboardCommitteesRoute
   appDashboardDeaconessesRoute: typeof appDashboardDeaconessesRoute
   appDashboardDepartmentsRoute: typeof appDashboardDepartmentsRoute
   appDashboardEldersRoute: typeof appDashboardEldersRoute
@@ -223,7 +223,7 @@ interface appDashboardRouteRouteChildren {
 
 const appDashboardRouteRouteChildren: appDashboardRouteRouteChildren = {
   appDashboardChildrenRoute: appDashboardChildrenRoute,
-  appDashboardCommitteeRoute: appDashboardCommitteeRoute,
+  appDashboardCommitteesRoute: appDashboardCommitteesRoute,
   appDashboardDeaconessesRoute: appDashboardDeaconessesRoute,
   appDashboardDepartmentsRoute: appDashboardDepartmentsRoute,
   appDashboardEldersRoute: appDashboardEldersRoute,
@@ -242,7 +242,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof appDashboardRouteRouteWithChildren
   '/': typeof authIndexRoute
   '/dashboard/children': typeof appDashboardChildrenRoute
-  '/dashboard/committee': typeof appDashboardCommitteeRoute
+  '/dashboard/committees': typeof appDashboardCommitteesRoute
   '/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/dashboard/elders': typeof appDashboardEldersRoute
@@ -257,7 +257,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof authIndexRoute
   '/dashboard/children': typeof appDashboardChildrenRoute
-  '/dashboard/committee': typeof appDashboardCommitteeRoute
+  '/dashboard/committees': typeof appDashboardCommitteesRoute
   '/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/dashboard/elders': typeof appDashboardEldersRoute
@@ -274,7 +274,7 @@ export interface FileRoutesById {
   '/(app)/dashboard': typeof appDashboardRouteRouteWithChildren
   '/(auth)/': typeof authIndexRoute
   '/(app)/dashboard/children': typeof appDashboardChildrenRoute
-  '/(app)/dashboard/committee': typeof appDashboardCommitteeRoute
+  '/(app)/dashboard/committees': typeof appDashboardCommitteesRoute
   '/(app)/dashboard/deaconesses': typeof appDashboardDeaconessesRoute
   '/(app)/dashboard/departments': typeof appDashboardDepartmentsRoute
   '/(app)/dashboard/elders': typeof appDashboardEldersRoute
@@ -292,7 +292,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/'
     | '/dashboard/children'
-    | '/dashboard/committee'
+    | '/dashboard/committees'
     | '/dashboard/deaconesses'
     | '/dashboard/departments'
     | '/dashboard/elders'
@@ -306,7 +306,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dashboard/children'
-    | '/dashboard/committee'
+    | '/dashboard/committees'
     | '/dashboard/deaconesses'
     | '/dashboard/departments'
     | '/dashboard/elders'
@@ -321,7 +321,7 @@ export interface FileRouteTypes {
     | '/(app)/dashboard'
     | '/(auth)/'
     | '/(app)/dashboard/children'
-    | '/(app)/dashboard/committee'
+    | '/(app)/dashboard/committees'
     | '/(app)/dashboard/deaconesses'
     | '/(app)/dashboard/departments'
     | '/(app)/dashboard/elders'
@@ -362,7 +362,7 @@ export const routeTree = rootRoute
       "filePath": "(app)/dashboard/route.tsx",
       "children": [
         "/(app)/dashboard/children",
-        "/(app)/dashboard/committee",
+        "/(app)/dashboard/committees",
         "/(app)/dashboard/deaconesses",
         "/(app)/dashboard/departments",
         "/(app)/dashboard/elders",
@@ -381,8 +381,8 @@ export const routeTree = rootRoute
       "filePath": "(app)/dashboard/children.tsx",
       "parent": "/(app)/dashboard"
     },
-    "/(app)/dashboard/committee": {
-      "filePath": "(app)/dashboard/committee.tsx",
+    "/(app)/dashboard/committees": {
+      "filePath": "(app)/dashboard/committees.tsx",
       "parent": "/(app)/dashboard"
     },
     "/(app)/dashboard/deaconesses": {

@@ -71,7 +71,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -93,7 +93,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 >
                   {TITLES.map((title) => (
                     <SelectItem key={title}>{title}</SelectItem>
@@ -119,7 +119,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 >
                   {GENDERS.map((gender) => (
                     <SelectItem key={gender}>{gender}</SelectItem>
@@ -147,7 +147,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 >
                   {DESIGNATIONS.map((designation) => (
                     <SelectItem key={designation}>{designation}</SelectItem>
@@ -173,7 +173,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -195,7 +195,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -217,7 +217,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -239,7 +239,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -261,7 +261,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 />
               )}
             </form.Field>
@@ -285,7 +285,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 >
                   {COMMITTEES.map((committee) => (
                     <SelectItem key={committee}>{committee}</SelectItem>
@@ -313,7 +313,7 @@ export default function MemberForm({
                       field.state.meta.errors.length
                     )
                   }
-                  errorMessage={field.state.meta.errors[0]}
+                  errorMessage={field.state.meta.errors.join(', ')}
                 >
                   {DEPARTMENTS.map((department) => (
                     <SelectItem key={department}>{department}</SelectItem>
@@ -388,12 +388,12 @@ const Auth = z.object({
       (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type),
       'Only .jpeg, .jpg, .png, .webp formats are supported',
     ),
-  title: z.string().trim().min(1, { message: 'Select title' }),
+  title: z.string().trim().min(1, { message: 'Please select title' }),
   fullName: z
     .string()
     .trim()
     .min(2, { message: 'Full name must be at least 2 characters long' }),
-  gender: z.string().trim().min(1, { message: 'Select gender' }),
+  gender: z.string().trim().min(1, { message: 'Please select gender' }),
   designation: z.enum(DESIGNATIONS).default('None'),
   location: z
     .string()
@@ -427,8 +427,8 @@ const Auth = z.object({
         return z.NEVER;
       }
     }),
-  email: z.string().email('Invalid email'),
-  birthday: z.string().date('Invalid date'),
+  email: z.string().email('Invalid email address'),
+  birthday: z.string().date('Invalid date format'),
   committee: z.enum(COMMITTEES).default('None'),
   department: z.enum(DEPARTMENTS).default('None'),
 });

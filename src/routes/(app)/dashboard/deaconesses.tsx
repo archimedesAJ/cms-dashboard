@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
 import {
   Button,
   Chip,
@@ -11,30 +11,30 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react'
-import { createFileRoute } from '@tanstack/react-router'
-import { PlusIcon, SearchIcon } from 'lucide-react'
-import * as React from 'react'
+} from '@heroui/react';
+import { createFileRoute } from '@tanstack/react-router';
+import { PlusIcon, SearchIcon } from 'lucide-react';
+import * as React from 'react';
 
 export const Route = createFileRoute('/(app)/dashboard/deaconesses')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const renderCell = (data: Deacon, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name
+        return data.name;
       case 'age':
-        return data.age
+        return data.age;
       case 'years_served':
-        return data.years_served
+        return data.years_served;
       case 'email':
-        return data.email
+        return data.email;
       case 'phone':
-        return data.phone
+        return data.phone;
       case 'status':
         return (
           <Chip
@@ -45,7 +45,7 @@ function RouteComponent() {
           >
             {data.status}
           </Chip>
-        )
+        );
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -65,11 +65,11 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
@@ -125,10 +125,10 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  )
+  );
 }
 
-type ColumnKey = (typeof columns)[number]['uid']
+type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
   { name: 'NAME', uid: 'name' },
   { name: 'AGE', uid: 'age' },
@@ -136,10 +136,10 @@ const columns = [
   { name: 'EMAIL', uid: 'email' },
   { name: 'CONTACT NUMBER', uid: 'phone' },
   { name: 'STATUS', uid: 'status' },
-]
+];
 /* eg data for view details: date established, contact email, contact number */
 
-type Deacon = (typeof deaconesses)[number]
+type Deacon = (typeof deaconesses)[number];
 const deaconesses = [
   {
     id: '1',
@@ -159,10 +159,10 @@ const deaconesses = [
     email: 'mary.johnson@church.org',
     status: 'Active',
   },
-]
+];
 
-type StatusKey = keyof typeof statusColor
+type StatusKey = keyof typeof statusColor;
 const statusColor = {
   Active: 'success',
   Inactive: 'warning',
-} as const
+} as const;

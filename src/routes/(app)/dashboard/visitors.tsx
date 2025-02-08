@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
 import {
   Button,
   Input,
@@ -10,30 +10,30 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react'
-import { createFileRoute } from '@tanstack/react-router'
-import { PlusIcon, SearchIcon } from 'lucide-react'
-import * as React from 'react'
+} from '@heroui/react';
+import { createFileRoute } from '@tanstack/react-router';
+import { PlusIcon, SearchIcon } from 'lucide-react';
+import * as React from 'react';
 
 export const Route = createFileRoute('/(app)/dashboard/visitors')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const renderCell = (data: Visitors, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return data.name
+        return data.name;
       case 'email':
-        return data.email
+        return data.email;
       case 'phone':
-        return data.phone
+        return data.phone;
       case 'visit_date':
-        return data.visit_date
+        return data.visit_date;
       case 'service_attended':
-        return data.service_attended
+        return data.service_attended;
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -53,11 +53,11 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
@@ -113,10 +113,10 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  )
+  );
 }
 
-type ColumnKey = (typeof columns)[number]['uid']
+type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
   { name: 'NAME', uid: 'name' },
   { name: 'EMAIL', uid: 'email' },
@@ -124,10 +124,10 @@ const columns = [
   { name: 'VISIT DATE', uid: 'visit_date' },
   { name: 'SERVICE ATTENDENDED', uid: 'service_attended' },
   { name: 'ACTIONS', uid: 'actions' },
-]
+];
 /* eg data for view details: image, gender */
 
-type Visitors = (typeof visitors)[number]
+type Visitors = (typeof visitors)[number];
 
 const visitors = [
   {
@@ -194,4 +194,4 @@ const visitors = [
     visit_date: '2025-02-07',
     service_attended: 'Sunday Service',
   },
-]
+];

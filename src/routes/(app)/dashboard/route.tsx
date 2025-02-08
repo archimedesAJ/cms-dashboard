@@ -23,15 +23,15 @@ import {
   BabyIcon,
   Building2Icon,
   ChurchIcon,
-  ClipboardCheckIcon,
+  CrownIcon,
   HandHeartIcon,
   LayoutDashboardIcon,
   MenuIcon,
   PanelLeftCloseIcon,
   PanelRightCloseIcon,
-  UserCogIcon,
   UserPlusIcon,
   UsersIcon,
+  UsersRoundIcon,
 } from 'lucide-react';
 import * as React from 'react';
 
@@ -272,14 +272,14 @@ const links = linkOptions([
     icon: <Building2Icon />,
   },
   {
-    to: '/dashboard/committee',
+    to: '/dashboard/committees',
     label: 'Committee',
-    icon: <ClipboardCheckIcon />,
+    icon: <UsersRoundIcon />,
   },
   {
     to: '/dashboard/elders',
     label: 'Elders',
-    icon: <UserCogIcon />,
+    icon: <CrownIcon />,
   },
   {
     to: '/dashboard/deaconesses',

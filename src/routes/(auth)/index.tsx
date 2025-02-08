@@ -25,6 +25,10 @@ function Form() {
   const navigate = useNavigate();
 
   const form = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
     onSubmit: async ({ value }) => {
       return new Promise(() => {
         setTimeout(() => {
@@ -63,7 +67,7 @@ function Form() {
                   type="email"
                   id={field.name}
                   name={field.name}
-                  value={field.state.value ?? ''}
+                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter your email"
@@ -85,7 +89,7 @@ function Form() {
                   type="password"
                   id={field.name}
                   name={field.name}
-                  value={field.state.value ?? ''}
+                  value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter your password"
@@ -123,15 +127,9 @@ function Form() {
 }
 
 const Auth = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email({
-      message: 'Invalid email',
-    }),
-  password: z
-    .string({ required_error: 'Password is required' })
-    .min(8, 'Password must be 8 or more characters long'),
+  email: z.string().email({
+    message: 'Invalid email address',
+  }),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
 });
 type Auth = z.infer<typeof Auth>;

@@ -46,8 +46,6 @@ function RouteComponent() {
         return data.location;
       case 'contact':
         return data.contact;
-      case 'email':
-        return data.email;
       case 'birthday':
         return data.birthday;
       case 'designation':
@@ -160,12 +158,11 @@ function RouteComponent() {
 
 type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
-  { name: 'FULL NAME', uid: 'fullName' },
+  { name: 'NAME', uid: 'fullName' },
   { name: 'TITLE', uid: 'title' },
   { name: 'GENDER', uid: 'gender' },
   { name: 'LOCATION', uid: 'location' },
   { name: 'CONTACT NUMBER', uid: 'contact' },
-  { name: 'EMAIL', uid: 'email' },
   { name: 'DATE OF BIRTH', uid: 'birthday' },
   { name: 'DESIGNATION', uid: 'designation' },
   { name: 'COMMITTEE', uid: 'committee' },
@@ -176,7 +173,6 @@ const columns = [
 /* eg data for view details: image, title, gender, department */
 
 type Member = (typeof members)[number];
-
 const members = [
   {
     id: 1,
@@ -185,9 +181,9 @@ const members = [
     gender: 'Male',
     designation: 'Elder',
     status: 'Active',
-    location: 'Haatso',
+    location: 'Tema',
     contact: '+233 00 000 0000',
-    birthday: '10th October, 1992',
+    birthday: '2025-03-22',
     committee: 'Welfare',
     department: 'Music',
     avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
@@ -202,7 +198,7 @@ const members = [
     status: 'Active',
     location: 'Haatso',
     contact: '+233 00 000 0000',
-    birthday: '10th October, 1992',
+    birthday: '2025-07-14',
     committee: 'Welfare',
     department: 'Music',
     avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
@@ -215,9 +211,9 @@ const members = [
     gender: 'Female',
     designation: 'Deaconess',
     status: 'Inactive',
-    location: 'Haatso',
+    location: 'Ashongman',
     contact: '+233 00 000 0000',
-    birthday: '10th June, 1990',
+    birthday: '2025-09-30',
     committee: 'Welfare',
     department: 'Music',
     avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
@@ -230,9 +226,9 @@ const members = [
     gender: 'Male',
     designation: 'None',
     status: 'Inactive',
-    location: 'Haatso',
+    location: 'East Legon',
     contact: '+233 00 000 0000',
-    birthday: '10th October, 1992',
+    birthday: '2025-05-08',
     committee: 'Welfare',
     department: 'IT',
     avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
@@ -245,9 +241,9 @@ const members = [
     gender: 'Female',
     designation: 'Deaconess',
     status: 'Active',
-    location: 'Haatso',
+    location: 'Dansoman',
     contact: '+233 00 000 0000',
-    birthday: '1st November, 1995',
+    birthday: '2025-11-19',
     committee: 'Welfare',
     department: 'Music',
     avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',

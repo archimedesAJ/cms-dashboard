@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
 import {
   Button,
   Input,
@@ -10,28 +10,28 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react'
-import { createFileRoute } from '@tanstack/react-router'
-import { PlusIcon, SearchIcon } from 'lucide-react'
-import * as React from 'react'
+} from '@heroui/react';
+import { createFileRoute } from '@tanstack/react-router';
+import { PlusIcon, SearchIcon } from 'lucide-react';
+import * as React from 'react';
 
-export const Route = createFileRoute('/(app)/dashboard/committee')({
+export const Route = createFileRoute('/(app)/dashboard/committees')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const renderCell = (data: Committee, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'committee_name':
-        return data.committee_name
+        return data.committee_name;
       case 'chairperson':
-        return data.chairperson
+        return data.chairperson;
       case 'members':
-        return data.members
+        return data.members;
       case 'meeting_frequency':
-        return data.meeting_frequency
+        return data.meeting_frequency;
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -51,11 +51,11 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
@@ -111,32 +111,32 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  )
+  );
 }
 
-type ColumnKey = (typeof columns)[number]['uid']
+type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
   { name: 'COMMITTEE NAME', uid: 'committee_name' },
   { name: 'CHAIRPERSON', uid: 'chairperson' },
   { name: 'MEMBERS', uid: 'members' },
   { name: 'MEETING FREQUENCY', uid: 'meeting_frequency' },
-]
+];
 /* eg data for view details: date established, contact email, contact number */
 
-type Committee = (typeof committees)[number]
+type Committee = (typeof committees)[number];
 const committees = [
   {
     id: '1',
-    committee_name: 'Finance Committee',
+    committee_name: 'Welfare',
     chairperson: 'John Doe',
     members: 10,
     meeting_frequency: 'Monthly',
   },
   {
     id: '2',
-    committee_name: 'Worship Planning Committee',
+    committee_name: 'Welfare',
     chairperson: 'Emily Davis',
     members: 8,
     meeting_frequency: 'Weekly',
   },
-]
+];

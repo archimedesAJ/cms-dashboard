@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons'
+import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
 import {
   Button,
   Input,
@@ -10,28 +10,28 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-} from '@heroui/react'
-import { createFileRoute } from '@tanstack/react-router'
-import { PlusIcon, SearchIcon } from 'lucide-react'
-import * as React from 'react'
+} from '@heroui/react';
+import { createFileRoute } from '@tanstack/react-router';
+import { PlusIcon, SearchIcon } from 'lucide-react';
+import * as React from 'react';
 
 export const Route = createFileRoute('/(app)/dashboard/departments')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1)
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const renderCell = (data: Department, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'department_name':
-        return data.department_name
+        return data.department_name;
       case 'leader':
-        return data.leader
+        return data.leader;
       case 'members':
-        return data.members
+        return data.members;
       case 'meeting_day':
-        return data.meeting_day
+        return data.meeting_day;
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -51,11 +51,11 @@ function RouteComponent() {
               </span>
             </Tooltip>
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-6">
@@ -111,74 +111,74 @@ function RouteComponent() {
         variant="bordered"
       />
     </div>
-  )
+  );
 }
 
-type ColumnKey = (typeof columns)[number]['uid']
+type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
   { name: 'DEPARTMENT NAME', uid: 'department_name' },
   { name: 'LEADER', uid: 'leader' },
   { name: 'MEMBERS', uid: 'members' },
   { name: 'MEETING DAY', uid: 'meeting_day' },
-]
+];
 /* eg data for view details: date established, contact email, contact number */
 
-type Department = (typeof departments)[number]
+type Department = (typeof departments)[number];
 const departments = [
   {
     id: 1,
-    department_name: 'Worship Ministry',
+    department_name: 'Music',
     leader: 'Pastor Mark',
     members: 25,
     meeting_day: 'Sunday',
   },
   {
     id: 2,
-    department_name: 'Youth Ministry',
+    department_name: 'Prayer',
     leader: 'Sarah Johnson',
     members: 15,
     meeting_day: 'Friday',
   },
   {
     id: 3,
-    department_name: 'Outreach Ministry',
+    department_name: 'Protocol & Security',
     leader: 'David Kim',
     members: 30,
     meeting_day: 'Saturday',
   },
   {
     id: 4,
-    department_name: "Children's Ministry",
+    department_name: 'IT & Media',
     leader: 'Emily Carter',
     members: 20,
     meeting_day: 'Sunday',
   },
   {
     id: 5,
-    department_name: 'Bible Study Group',
+    department_name: 'None',
     leader: 'Michael Johnson',
     members: 12,
     meeting_day: 'Wednesday',
   },
   {
     id: 6,
-    department_name: 'Hospitality Team',
+    department_name: 'Prayer',
     leader: 'Olivia Brown',
     members: 10,
     meeting_day: 'Monday',
   },
   {
     id: 7,
-    department_name: 'Prayer Ministry',
+    department_name: 'Music',
     leader: 'Grace Martinez',
     members: 8,
     meeting_day: 'Thursday',
   },
   {
     id: 9,
-    department_name: 'Media Team',
+    department_name: 'IT & Media',
     leader: 'Liam Thompson',
     members: 18,
     meeting_day: 'Friday',
   },
-]
+];
