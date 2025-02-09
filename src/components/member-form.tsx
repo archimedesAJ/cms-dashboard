@@ -17,7 +17,7 @@ export default function MemberForm({
       title: '',
       fullName: '',
       gender: '',
-      designation: 'None',
+      status: '',
       location: '',
       contact: '',
       email: '',
@@ -127,20 +127,18 @@ export default function MemberForm({
                 </Select>
               )}
             </form.Field>
-            <form.Field name="designation">
+            <form.Field name="status">
               {(field) => (
                 <Select
                   key={resetSelectField}
-                  label="Designation"
+                  label="Status"
                   labelPlacement="outside"
                   selectionMode="single"
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
-                  defaultSelectedKeys={[DESIGNATIONS[0]]}
-                  onChange={(e) =>
-                    field.handleChange(e.target.value as Designation)
-                  }
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="Select status"
                   isInvalid={
                     !!(
                       field.state.meta.isTouched &&
@@ -149,8 +147,8 @@ export default function MemberForm({
                   }
                   errorMessage={field.state.meta.errors.join(', ')}
                 >
-                  {DESIGNATIONS.map((designation) => (
-                    <SelectItem key={designation}>{designation}</SelectItem>
+                  {STATUSES.map((status) => (
+                    <SelectItem key={status}>{status}</SelectItem>
                   ))}
                 </Select>
               )}
@@ -365,7 +363,7 @@ const TITLES = ['Mr', 'Mrs', 'Miss', 'Dr', 'Rev', 'Bishop', 'Ps'] as const;
 
 const GENDERS = ['Male', 'Female'] as const;
 
-const DESIGNATIONS = ['None', 'Deaconess', 'Elder', 'Pastor/Bishop'] as const;
+const STATUSES = ['Active', 'Inactive'] as const;
 
 const COMMITTEES = ['None', 'Welfare'] as const;
 
@@ -394,7 +392,7 @@ const Auth = z.object({
     .trim()
     .min(2, { message: 'Full name must be at least 2 characters long' }),
   gender: z.string().trim().min(1, { message: 'Please select gender' }),
-  designation: z.enum(DESIGNATIONS).default('None'),
+  status: z.string().trim().min(1, { message: 'Please select status' }),
   location: z
     .string()
     .trim()
@@ -434,6 +432,5 @@ const Auth = z.object({
 });
 
 type Auth = z.infer<typeof Auth>;
-type Designation = z.infer<typeof Auth.shape.designation>;
 type Committee = z.infer<typeof Auth.shape.committee>;
 type Department = z.infer<typeof Auth.shape.department>;

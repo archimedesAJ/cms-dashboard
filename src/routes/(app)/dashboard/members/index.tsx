@@ -48,8 +48,6 @@ function RouteComponent() {
         return data.contact;
       case 'birthday':
         return data.birthday;
-      case 'designation':
-        return data.designation;
       case 'committee':
         return data.committee;
       case 'department':
@@ -164,13 +162,12 @@ const columns = [
   { name: 'LOCATION', uid: 'location' },
   { name: 'CONTACT NUMBER', uid: 'contact' },
   { name: 'DATE OF BIRTH', uid: 'birthday' },
-  { name: 'DESIGNATION', uid: 'designation' },
   { name: 'COMMITTEE', uid: 'committee' },
   { name: 'DEPARTMENT', uid: 'department' },
   { name: 'STATUS', uid: 'status' },
   { name: 'ACTIONS', uid: 'actions' },
 ];
-/* eg data for view details: image, title, gender, department */
+/* eg data for view details: dateJoined*/
 
 type Member = (typeof members)[number];
 const members = [
@@ -179,7 +176,6 @@ const members = [
     fullName: 'Tony Reichert',
     title: 'Mr',
     gender: 'Male',
-    designation: 'Elder',
     status: 'Active',
     location: 'Tema',
     contact: '+233 00 000 0000',
@@ -194,7 +190,6 @@ const members = [
     title: 'Mrs',
     fullName: 'Zoey Lang',
     gender: 'Female',
-    designation: 'None',
     status: 'Active',
     location: 'Haatso',
     contact: '+233 00 000 0000',
@@ -209,7 +204,6 @@ const members = [
     title: 'Mrs',
     fullName: 'Jane Fisher',
     gender: 'Female',
-    designation: 'Deaconess',
     status: 'Inactive',
     location: 'Ashongman',
     contact: '+233 00 000 0000',
@@ -224,7 +218,6 @@ const members = [
     fullName: 'William Howard',
     title: 'Mr',
     gender: 'Male',
-    designation: 'None',
     status: 'Inactive',
     location: 'East Legon',
     contact: '+233 00 000 0000',
@@ -239,7 +232,6 @@ const members = [
     fullName: 'Kristen Copper',
     title: 'Mrs',
     gender: 'Female',
-    designation: 'Deaconess',
     status: 'Active',
     location: 'Dansoman',
     contact: '+233 00 000 0000',

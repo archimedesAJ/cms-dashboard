@@ -148,9 +148,6 @@ function RouteComponent() {
           <DropdownTrigger>
             <User
               as="button"
-              avatarProps={{
-                src: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-              }}
               className="transition-transform"
               description="Admin"
               name="John Doe"
