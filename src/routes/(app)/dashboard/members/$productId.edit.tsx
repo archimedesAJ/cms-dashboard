@@ -1,6 +1,6 @@
 import MemberForm from '@/components/member-form';
 import { createFileRoute } from '@tanstack/react-router';
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const Route = createFileRoute(
   '/(app)/dashboard/members/$productId/edit',

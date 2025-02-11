@@ -2,7 +2,7 @@ import { Button, Input, Select, SelectItem } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
 import { parsePhoneNumber } from 'libphonenumber-js/min';
 import * as React from 'react';
-import * as z from 'zod';
+import { z } from 'zod';
 
 export default function MemberForm({
   formMode = 'create',

@@ -1,7 +1,9 @@
+import { config } from '@/config/app';
+import { Login } from '@/schemas/auth';
+import { useLoginMutation } from '@/utils/query-options';
 import { Button, Input } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import * as z from 'zod';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/(auth)/')({
   component: RouteComponent,
@@ -22,24 +24,18 @@ function RouteComponent() {
 }
 
 function Form() {
-  const navigate = useNavigate();
+  const loginMutation = useLoginMutation();
 
   const form = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      username: config.isDev ? 'abrahamabbey' : '',
+      password: config.isDev ? '22cuma@ASU' : '',
     },
-    onSubmit: async ({ value }) => {
-      return new Promise(() => {
-        setTimeout(() => {
-          console.log(value);
-          form.reset();
-          void navigate({ to: '/dashboard' });
-        }, 3000);
-      });
+    onSubmit: ({ value }) => {
+      loginMutation.mutate(value);
     },
     validators: {
-      onChange: Auth,
+      onChange: Login,
     },
   });
 
@@ -48,7 +44,7 @@ function Form() {
       <div className="w-full max-w-sm space-y-12 max-lg:p-8 max-md:p-4">
         <div className="text-center">
           <h3>Admin Login</h3>
-          <p>Enter your email & password to log in</p>
+          <p>Enter your username & password to log in</p>
         </div>
         <form
           className="space-y-8"
@@ -59,18 +55,18 @@ function Form() {
           }}
         >
           <div className="space-y-12">
-            <form.Field name="email">
+            <form.Field name="username">
               {(field) => (
                 <Input
-                  label="Email"
+                  label="Name"
                   labelPlacement="outside"
-                  type="email"
+                  type="text"
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder="Enter your username"
                   isInvalid={
                     !!(
                       field.state.meta.isTouched &&
@@ -108,28 +104,24 @@ function Form() {
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
           >
-            {([canSubmit, isSubmitting]) => (
-              <Button
-                type="submit"
-                color="primary"
-                fullWidth
-                isLoading={isSubmitting}
-                isDisabled={!canSubmit}
-              >
-                {isSubmitting ? null : 'Submit'}
-              </Button>
-            )}
+            {([canSubmit, isSubmitting]) => {
+              const isPending = isSubmitting || loginMutation.isPending;
+
+              return (
+                <Button
+                  type="submit"
+                  color="primary"
+                  fullWidth
+                  isLoading={isPending}
+                  isDisabled={!canSubmit}
+                >
+                  {isPending ? null : 'Submit'}
+                </Button>
+              );
+            }}
           </form.Subscribe>
         </form>
       </div>
     </div>
   );
 }
-
-const Auth = z.object({
-  email: z.string().email({
-    message: 'Invalid email address',
-  }),
-  password: z.string().min(8, 'Password must be at least 8 characters long'),
-});
-type Auth = z.infer<typeof Auth>;
