@@ -1,3 +1,5 @@
+import { REFRESH_TOKEN_KEY } from '@/lib/axios-instance';
+import { useLogoutMutation } from '@/utils/query-options';
 import {
   Button,
   cn,
@@ -17,7 +19,6 @@ import {
   Link,
   linkOptions,
   Outlet,
-  useNavigate,
 } from '@tanstack/react-router';
 import {
   BabyIcon,
@@ -47,7 +48,8 @@ function RouteComponent() {
   };
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const navigate = useNavigate();
+
+  const logoutMutation = useLogoutMutation();
 
   return (
     <div className="dashboard-container min-h-dvh bg-content3">
@@ -159,7 +161,9 @@ function RouteComponent() {
               key="logout"
               color="danger"
               onPress={() => {
-                void navigate({ to: '/' });
+                void logoutMutation.mutate({
+                  refresh: localStorage.getItem(REFRESH_TOKEN_KEY) as string,
+                });
               }}
             >
               Log Out

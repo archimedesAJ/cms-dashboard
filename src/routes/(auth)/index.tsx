@@ -1,5 +1,5 @@
 import { config } from '@/config/app';
-import { Login } from '@/schemas/auth';
+import { ApiLoginPayload } from '@/schemas/auth';
 import { useLoginMutation } from '@/utils/query-options';
 import { Button, Input } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
@@ -35,7 +35,7 @@ function Form() {
       loginMutation.mutate(value);
     },
     validators: {
-      onChange: Login,
+      onChange: ApiLoginPayload,
     },
   });
 
