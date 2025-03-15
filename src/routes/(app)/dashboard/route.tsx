@@ -35,6 +35,7 @@ import {
   UsersRoundIcon,
 } from 'lucide-react';
 import * as React from 'react';
+import { toast } from 'sonner';
 
 export const Route = createFileRoute('/(app)/dashboard')({
   component: RouteComponent,
@@ -161,9 +162,15 @@ function RouteComponent() {
               key="logout"
               color="danger"
               onPress={() => {
-                void logoutMutation.mutate({
-                  refresh: localStorage.getItem(REFRESH_TOKEN_KEY) as string,
-                });
+                toast.promise(
+                  logoutMutation.mutateAsync({
+                    refresh: localStorage.getItem(REFRESH_TOKEN_KEY) as string,
+                  }),
+                  {
+                    loading: 'Logging out...',
+                    error: 'Logout failed',
+                  },
+                );
               }}
             >
               Log Out

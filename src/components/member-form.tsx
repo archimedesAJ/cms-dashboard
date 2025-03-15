@@ -10,7 +10,9 @@ import {
 import { useCreateMemberMutation } from '@/utils/query-options';
 import { Button, Input, Select, SelectItem } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
+import { useNavigate } from '@tanstack/react-router';
 import * as React from 'react';
+import { toast } from 'sonner';
 
 export default function MemberForm({
   formMode = 'create',
@@ -20,6 +22,8 @@ export default function MemberForm({
   const [resetSelectField, setResetSelectField] = React.useState(Date.now());
 
   const createMemberMutation = useCreateMemberMutation();
+
+  const navigate = useNavigate();
 
   const form = useForm({
     defaultValues: {
@@ -43,10 +47,24 @@ export default function MemberForm({
         formData.append(key, value[key]);
       }
 
-      createMemberMutation.mutate(formData);
+      toast.promise(createMemberMutation.mutateAsync(formData), {
+        loading: 'Adding member...',
+        success: (data) => {
+          form.reset();
+          setResetSelectField(Date.now());
 
-      form.reset();
-      setResetSelectField(Date.now());
+          return {
+            message: data.message,
+            /* replace object with jsx for more customization */
+            action: {
+              label: 'View all members',
+              onClick: () => void navigate({ to: '/dashboard/members' }),
+            },
+            duration: 6000,
+          };
+        },
+        error: 'Failed to add member',
+      });
     },
     validators: {
       // @ts-expect-error zod schema

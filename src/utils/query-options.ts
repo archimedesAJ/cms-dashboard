@@ -18,15 +18,17 @@ import {
 import { queryOptions, useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 /* queries */
+const membersQueryKey = ['members'];
 const getMembers = async () => {
   const response = await apiClient.get(apiEndpoints.members.base);
   return ApiGetMembersResponse.parse(response.data);
 };
 export const membersQueryOptions = () => {
   return queryOptions({
-    queryKey: ['members'],
+    queryKey: membersQueryKey,
     queryFn: getMembers,
   });
 };
@@ -50,6 +52,9 @@ export function useLoginMutation() {
       localStorage.setItem(REFRESH_TOKEN_KEY, data.refresh);
       void queryClient.invalidateQueries();
       void navigate({ to: '/dashboard' });
+    },
+    onError: () => {
+      toast.error('Login failed');
     },
   });
 }
@@ -85,7 +90,7 @@ export function useCreateMemberMutation() {
     mutationFn: createMember,
     onSuccess: () => {
       void queryClient.invalidateQueries({
-        queryKey: ['members'],
+        queryKey: membersQueryKey,
       });
     },
   });

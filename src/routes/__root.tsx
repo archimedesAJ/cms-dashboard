@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import * as React from 'react';
+import { Toaster } from 'sonner';
 
 interface AppRouterContext {
   queryClient: QueryClient;
@@ -9,6 +10,7 @@ interface AppRouterContext {
 export const Route = createRootRouteWithContext<AppRouterContext>()({
   component: () => (
     <>
+      <Toaster richColors position="top-right" />
       <Outlet />
       <React.Suspense>
         <TanStackRouterDevtools />
