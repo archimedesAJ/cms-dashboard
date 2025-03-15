@@ -1,4 +1,5 @@
 import { config } from '@/config/app';
+import { fieldInfo, validationTrigger } from '@/lib/form-errors';
 import { ApiLoginPayload } from '@/schemas/auth';
 import { useLoginMutation } from '@/utils/query-options';
 import { Button, Input } from '@heroui/react';
@@ -67,13 +68,8 @@ function Form() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter your username"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -89,13 +85,8 @@ function Form() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter your password"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>

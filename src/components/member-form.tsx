@@ -1,3 +1,4 @@
+import { fieldInfo, validationTrigger } from '@/lib/form-errors';
 import {
   ApiMemberPayload,
   COMMITTEES,
@@ -48,6 +49,7 @@ export default function MemberForm({
       setResetSelectField(Date.now());
     },
     validators: {
+      // @ts-expect-error zod schema
       onChange: ApiMemberPayload,
     },
   });
@@ -76,15 +78,11 @@ export default function MemberForm({
                   name={field.name}
                   onChange={(e) => {
                     const file = e.target.files?.[0];
+                    // @ts-expect-error file type
                     field.handleChange(file);
                   }}
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -100,13 +98,8 @@ export default function MemberForm({
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Select title"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 >
                   {TITLES.map((title) => (
                     <SelectItem key={title}>{title}</SelectItem>
@@ -126,13 +119,8 @@ export default function MemberForm({
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Select gender"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 >
                   {GENDERS.map((gender) => (
                     <SelectItem key={gender}>{gender}</SelectItem>
@@ -152,13 +140,8 @@ export default function MemberForm({
                   value={field.state.value}
                   defaultSelectedKeys={[DESIGNATIONS[0]]}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 >
                   {DESIGNATIONS.map((designation) => (
                     <SelectItem key={designation}>{designation}</SelectItem>
@@ -178,13 +161,8 @@ export default function MemberForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter full name"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -200,13 +178,8 @@ export default function MemberForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter location"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -222,13 +195,8 @@ export default function MemberForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter contact"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -244,13 +212,8 @@ export default function MemberForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter email"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -266,13 +229,8 @@ export default function MemberForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter birthday"
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 />
               )}
             </form.Field>
@@ -288,13 +246,8 @@ export default function MemberForm({
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   defaultSelectedKeys={[COMMITTEES[0]]}
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 >
                   {COMMITTEES.map((committee) => (
                     <SelectItem key={committee}>{committee}</SelectItem>
@@ -314,13 +267,8 @@ export default function MemberForm({
                   value={field.state.value}
                   defaultSelectedKeys={[DEPARTMENTS[0]]}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  isInvalid={
-                    !!(
-                      field.state.meta.isTouched &&
-                      field.state.meta.errors.length
-                    )
-                  }
-                  errorMessage={field.state.meta.errors.join(', ')}
+                  isInvalid={validationTrigger(field)}
+                  errorMessage={fieldInfo(field)}
                 >
                   {DEPARTMENTS.map((department) => (
                     <SelectItem key={department}>{department}</SelectItem>
