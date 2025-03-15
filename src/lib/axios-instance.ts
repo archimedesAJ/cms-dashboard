@@ -32,14 +32,17 @@ apiClient.interceptors.response.use(
   (error: AxiosError) => {
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest?._retry) {
-      originalRequest!._retry = true;
-
       const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY) as string;
-      localStorage.setItem(ACCESS_TOKEN_KEY, refreshToken);
 
-      originalRequest!.headers.Authorization = `Bearer ${refreshToken}`;
+      if (refreshToken) {
+        originalRequest!._retry = true;
+        localStorage.setItem(ACCESS_TOKEN_KEY, refreshToken);
+        localStorage.removeItem(REFRESH_TOKEN_KEY);
 
-      return apiClient(originalRequest!);
+        return apiClient(originalRequest!);
+      } else {
+        history.replaceState(null, '', '/');
+      }
     }
     return Promise.reject(error);
   },

@@ -1,9 +1,8 @@
 import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
+import { membersQueryOptions } from '@/utils/query-options';
 import {
   Button,
-  Chip,
   Input,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -13,27 +12,32 @@ import {
   Tooltip,
   User,
 } from '@heroui/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { PlusIcon, SearchIcon } from 'lucide-react';
-import * as React from 'react';
 
 export const Route = createFileRoute('/(app)/dashboard/members/')({
+  loader: (opts) =>
+    opts.context.queryClient.ensureQueryData(membersQueryOptions()),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [currentPage, setCurrentPage] = React.useState(1);
-
   const navigate = useNavigate();
 
-  const renderCell = (data: Member, columnKey: ColumnKey) => {
+  const membersQuery = useSuspenseQuery(membersQueryOptions());
+
+  const renderCell = (
+    data: (typeof membersQuery.data.results)[number],
+    columnKey: ColumnKey,
+  ) => {
     switch (columnKey) {
-      case 'fullName':
+      case 'full_name':
         return (
           <User
-            avatarProps={{ radius: 'lg', src: data.avatar }}
+            avatarProps={{ radius: 'lg', src: data.image }}
             description={data.email}
-            name={data.fullName}
+            name={data.full_name}
           >
             {data.email}
           </User>
@@ -44,25 +48,16 @@ function RouteComponent() {
         return data.gender;
       case 'location':
         return data.location;
-      case 'contact':
-        return data.contact;
+      case 'contact_no':
+        return data.contact_no;
       case 'birthday':
         return data.birthday;
       case 'committee':
         return data.committee;
       case 'department':
         return data.department;
-      case 'status':
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColor[data.status as StatusKey]}
-            size="sm"
-            variant="flat"
-          >
-            {data.status}
-          </Chip>
-        );
+      case 'designation':
+        return data.designation;
       case 'actions':
         return (
           <div className="relative flex items-center gap-4">
@@ -85,9 +80,9 @@ function RouteComponent() {
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete member">
-              <span className="cursor-pointer text-lg text-danger active:opacity-50">
+              <button className="cursor-pointer text-lg text-danger active:opacity-50">
                 <DeleteIcon />
-              </span>
+              </button>
             </Tooltip>
           </div>
         );
@@ -130,7 +125,7 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={members}>
+        <TableBody items={membersQuery.data.results}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -142,109 +137,29 @@ function RouteComponent() {
           )}
         </TableBody>
       </Table>
-      <Pagination
+      {/* add when total number of pages is returned */}
+      {/* <Pagination
         page={currentPage}
-        total={10}
+        total={1}
         onChange={setCurrentPage}
         showControls
         className="ml-auto"
         variant="bordered"
-      />
+      /> */}
     </div>
   );
 }
 
 type ColumnKey = (typeof columns)[number]['uid'];
 const columns = [
-  { name: 'NAME', uid: 'fullName' },
+  { name: 'NAME', uid: 'full_name' },
   { name: 'TITLE', uid: 'title' },
   { name: 'GENDER', uid: 'gender' },
   { name: 'LOCATION', uid: 'location' },
-  { name: 'CONTACT NUMBER', uid: 'contact' },
+  { name: 'CONTACT NUMBER', uid: 'contact_no' },
   { name: 'DATE OF BIRTH', uid: 'birthday' },
   { name: 'COMMITTEE', uid: 'committee' },
   { name: 'DEPARTMENT', uid: 'department' },
-  { name: 'STATUS', uid: 'status' },
+  { name: 'DESIGNATION', uid: 'designation' },
   { name: 'ACTIONS', uid: 'actions' },
 ];
-/* eg data for view details: dateJoined*/
-
-type Member = (typeof members)[number];
-const members = [
-  {
-    id: 1,
-    fullName: 'Tony Reichert',
-    title: 'Mr',
-    gender: 'Male',
-    status: 'Active',
-    location: 'Tema',
-    contact: '+233 00 000 0000',
-    birthday: '2025-03-22',
-    committee: 'Welfare',
-    department: 'Music',
-    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-    email: 'tony.reichert@example.com',
-  },
-  {
-    id: 2,
-    title: 'Mrs',
-    fullName: 'Zoey Lang',
-    gender: 'Female',
-    status: 'Active',
-    location: 'Haatso',
-    contact: '+233 00 000 0000',
-    birthday: '2025-07-14',
-    committee: 'Welfare',
-    department: 'Music',
-    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-    email: 'zoey.lang@example.com',
-  },
-  {
-    id: 3,
-    title: 'Mrs',
-    fullName: 'Jane Fisher',
-    gender: 'Female',
-    status: 'Inactive',
-    location: 'Ashongman',
-    contact: '+233 00 000 0000',
-    birthday: '2025-09-30',
-    committee: 'Welfare',
-    department: 'Music',
-    avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-    email: 'jane.fisher@example.com',
-  },
-  {
-    id: 4,
-    fullName: 'William Howard',
-    title: 'Mr',
-    gender: 'Male',
-    status: 'Inactive',
-    location: 'East Legon',
-    contact: '+233 00 000 0000',
-    birthday: '2025-05-08',
-    committee: 'Welfare',
-    department: 'IT',
-    avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
-    email: 'william.howard@example.com',
-  },
-  {
-    id: 5,
-    fullName: 'Kristen Copper',
-    title: 'Mrs',
-    gender: 'Female',
-    status: 'Active',
-    location: 'Dansoman',
-    contact: '+233 00 000 0000',
-    birthday: '2025-11-19',
-    committee: 'Welfare',
-    department: 'Music',
-    avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
-    email: 'kristen.cooper@example.com',
-  },
-];
-
-type StatusKey = keyof typeof statusColor;
-const statusColor = {
-  Active: 'success',
-  Inactive: 'warning',
-} as const;

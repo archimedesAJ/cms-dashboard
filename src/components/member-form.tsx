@@ -1,8 +1,15 @@
+import {
+  ApiMemberPayload,
+  COMMITTEES,
+  DEPARTMENTS,
+  DESIGNATIONS,
+  GENDERS,
+  TITLES,
+} from '@/schemas/members';
+import { useCreateMemberMutation } from '@/utils/query-options';
 import { Button, Input, Select, SelectItem } from '@heroui/react';
 import { useForm } from '@tanstack/react-form';
-import { parsePhoneNumber } from 'libphonenumber-js/min';
 import * as React from 'react';
-import { z } from 'zod';
 
 export default function MemberForm({
   formMode = 'create',
@@ -11,31 +18,37 @@ export default function MemberForm({
 }) {
   const [resetSelectField, setResetSelectField] = React.useState(Date.now());
 
+  const createMemberMutation = useCreateMemberMutation();
+
   const form = useForm({
     defaultValues: {
-      avatar: undefined,
+      image: undefined,
       title: '',
-      fullName: '',
+      full_name: '',
       gender: '',
-      status: '',
+      designation: 'none',
       location: '',
-      contact: '',
+      contact_no: '',
       email: '',
       birthday: '',
-      committee: 'None',
-      department: 'None',
+      committee: 'none',
+      department: 'none',
     },
-    onSubmit: async ({ value }) => {
-      return new Promise(() => {
-        setTimeout(() => {
-          console.log(value);
-          form.reset();
-          setResetSelectField(Date.now());
-        }, 3000);
-      });
+    onSubmit: ({ value }) => {
+      const formData = new FormData();
+      for (const key in value) {
+        // @ts-expect-error file type
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        formData.append(key, value[key]);
+      }
+
+      createMemberMutation.mutate(formData);
+
+      form.reset();
+      setResetSelectField(Date.now());
     },
     validators: {
-      onChange: Auth,
+      onChange: ApiMemberPayload,
     },
   });
 
@@ -52,7 +65,7 @@ export default function MemberForm({
           }}
         >
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] items-start gap-6">
-            <form.Field name="avatar">
+            <form.Field name="image">
               {(field) => (
                 <Input
                   key={resetSelectField}
@@ -127,18 +140,18 @@ export default function MemberForm({
                 </Select>
               )}
             </form.Field>
-            <form.Field name="status">
+            <form.Field name="designation">
               {(field) => (
                 <Select
                   key={resetSelectField}
-                  label="Status"
+                  label="Designation"
                   labelPlacement="outside"
                   selectionMode="single"
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
+                  defaultSelectedKeys={[DESIGNATIONS[0]]}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Select status"
                   isInvalid={
                     !!(
                       field.state.meta.isTouched &&
@@ -147,13 +160,13 @@ export default function MemberForm({
                   }
                   errorMessage={field.state.meta.errors.join(', ')}
                 >
-                  {STATUSES.map((status) => (
-                    <SelectItem key={status}>{status}</SelectItem>
+                  {DESIGNATIONS.map((designation) => (
+                    <SelectItem key={designation}>{designation}</SelectItem>
                   ))}
                 </Select>
               )}
             </form.Field>
-            <form.Field name="fullName">
+            <form.Field name="full_name">
               {(field) => (
                 <Input
                   label="Full Name"
@@ -197,7 +210,7 @@ export default function MemberForm({
                 />
               )}
             </form.Field>
-            <form.Field name="contact">
+            <form.Field name="contact_no">
               {(field) => (
                 <Input
                   label="Contact"
@@ -273,9 +286,7 @@ export default function MemberForm({
                   id={field.name}
                   name={field.name}
                   value={field.state.value}
-                  onChange={(e) =>
-                    field.handleChange(e.target.value as Committee)
-                  }
+                  onChange={(e) => field.handleChange(e.target.value)}
                   defaultSelectedKeys={[COMMITTEES[0]]}
                   isInvalid={
                     !!(
@@ -302,9 +313,7 @@ export default function MemberForm({
                   name={field.name}
                   value={field.state.value}
                   defaultSelectedKeys={[DEPARTMENTS[0]]}
-                  onChange={(e) =>
-                    field.handleChange(e.target.value as Department)
-                  }
+                  onChange={(e) => field.handleChange(e.target.value)}
                   isInvalid={
                     !!(
                       field.state.meta.isTouched &&
@@ -350,87 +359,3 @@ export default function MemberForm({
     </div>
   );
 }
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-const ACCEPTED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-];
-
-const TITLES = ['Mr', 'Mrs', 'Miss', 'Dr', 'Rev', 'Bishop', 'Ps'] as const;
-
-const GENDERS = ['Male', 'Female'] as const;
-
-const STATUSES = ['Active', 'Inactive'] as const;
-
-const COMMITTEES = ['None', 'Welfare'] as const;
-
-const DEPARTMENTS = [
-  'None',
-  'Music',
-  'IT & Media',
-  'Prayer',
-  'Protocol & Security',
-] as const;
-
-const Auth = z.object({
-  avatar: z
-    .instanceof(File)
-    .optional()
-    .refine((file) => !file || file.size <= MAX_FILE_SIZE, {
-      message: 'Max image size is 10MB',
-    })
-    .refine(
-      (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type),
-      'Only .jpeg, .jpg, .png, .webp formats are supported',
-    ),
-  title: z.string().trim().min(1, { message: 'Please select title' }),
-  fullName: z
-    .string()
-    .trim()
-    .min(2, { message: 'Full name must be at least 2 characters long' }),
-  gender: z.string().trim().min(1, { message: 'Please select gender' }),
-  status: z.string().trim().min(1, { message: 'Please select status' }),
-  location: z
-    .string()
-    .trim()
-    .min(2, { message: 'Location must be at least 2 characters long' }),
-  contact: z
-    .string()
-    .trim()
-    .min(1, { message: 'Invalid phone number' })
-    .transform((value, ctx) => {
-      try {
-        const phoneNumber = parsePhoneNumber(value, {
-          defaultCountry: 'GH',
-          extract: false,
-        });
-
-        if (!phoneNumber?.isValid()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'Invalid phone number',
-          });
-          return z.NEVER;
-        }
-
-        return phoneNumber.formatInternational();
-      } catch {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Invalid phone number',
-        });
-        return z.NEVER;
-      }
-    }),
-  email: z.string().email('Invalid email address'),
-  birthday: z.string().date('Invalid date format'),
-  committee: z.enum(COMMITTEES).default('None'),
-  department: z.enum(DEPARTMENTS).default('None'),
-});
-
-type Auth = z.infer<typeof Auth>;
-type Committee = z.infer<typeof Auth.shape.committee>;
-type Department = z.infer<typeof Auth.shape.department>;

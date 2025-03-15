@@ -3,4 +3,7 @@ export const apiEndpoints = {
     login: '/login',
     logout: '/logout',
   },
+  members: {
+    base: '/members/',
+  },
 };
