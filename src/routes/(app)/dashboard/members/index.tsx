@@ -40,7 +40,7 @@ function RouteComponent() {
       case 'full_name':
         return (
           <User
-            avatarProps={{ radius: 'lg', src: data.image || undefined }}
+            avatarProps={{ radius: 'lg', src: data.image_url || undefined }}
             description={data.email}
             name={data.full_name}
           >
