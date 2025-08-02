@@ -1,8 +1,12 @@
 import { DeleteIcon, EditIcon, EyeIcon } from '@/components/icons';
-import { membersQueryOptions } from '@/utils/query-options';
+import {
+  membersQueryOptions,
+  useDeleteMemberMutation,
+} from '@/utils/query-options';
 import {
   Button,
   Input,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -15,6 +19,7 @@ import {
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { PlusIcon, SearchIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const Route = createFileRoute('/(app)/dashboard/members/')({
   loader: (opts) =>
@@ -62,28 +67,25 @@ function RouteComponent() {
         return (
           <div className="relative flex items-center gap-4">
             <Tooltip content="Details">
-              <span className="cursor-pointer text-lg text-default-400 active:opacity-50">
-                <EyeIcon />
-              </span>
+              <Button isIconOnly variant="light">
+                <EyeIcon className="size-5" />
+              </Button>
             </Tooltip>
             <Tooltip content="Edit details">
-              <span
-                className="cursor-pointer text-lg text-default-400 active:opacity-50"
-                onClick={() =>
+              <Button
+                isIconOnly
+                variant="light"
+                onPress={() =>
                   void navigate({
                     to: '/dashboard/members/$productId/edit',
                     params: { productId: data.id },
                   })
                 }
               >
-                <EditIcon />
-              </span>
+                <EditIcon className="size-5" />
+              </Button>
             </Tooltip>
-            <Tooltip color="danger" content="Delete member">
-              <button className="cursor-pointer text-lg text-danger active:opacity-50">
-                <DeleteIcon />
-              </button>
-            </Tooltip>
+            <DeleteButton memberId={data.id} />
           </div>
         );
       default:
@@ -125,7 +127,10 @@ function RouteComponent() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={membersQuery.data.results}>
+        <TableBody
+          items={membersQuery.data.results}
+          emptyContent={'No members found'}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
@@ -163,3 +168,29 @@ const columns = [
   { name: 'DESIGNATION', uid: 'designation' },
   { name: 'ACTIONS', uid: 'actions' },
 ];
+
+function DeleteButton({ memberId }: { memberId: number }) {
+  const deleteMutation = useDeleteMemberMutation();
+
+  return (
+    <Tooltip color="danger" content="Delete member">
+      <Button
+        isIconOnly
+        variant="light"
+        color="danger"
+        isLoading={deleteMutation.isPending}
+        isDisabled={deleteMutation.isPending}
+        spinner={<Spinner size="sm" variant="spinner" color="danger" />}
+        onPress={() => {
+          toast.promise(deleteMutation.mutateAsync(memberId), {
+            loading: 'Deleting member...',
+            error: 'Member deletion failed',
+            success: 'Member deleted successfully',
+          });
+        }}
+      >
+        <DeleteIcon className="size-5" />
+      </Button>
+    </Tooltip>
+  );
+}

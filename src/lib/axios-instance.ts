@@ -30,11 +30,12 @@ declare module 'axios' {
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest?._retry) {
+    if (error.response?.status === 401) {
+      const originalRequest = error.config;
       const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY) as string;
 
-      if (refreshToken) {
+      /* 401 + refreshToken + not retried, retry. otherwise(404 + no refreshToken + retried), logout */
+      if (refreshToken && !originalRequest?._retry) {
         originalRequest!._retry = true;
         localStorage.setItem(ACCESS_TOKEN_KEY, refreshToken);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -42,6 +43,7 @@ apiClient.interceptors.response.use(
         return apiClient(originalRequest!);
       } else {
         history.replaceState(null, '', '/');
+        return;
       }
     }
     return Promise.reject(error);

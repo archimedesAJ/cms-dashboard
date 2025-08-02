@@ -1,5 +1,5 @@
 import { REFRESH_TOKEN_KEY } from '@/lib/axios-instance';
-import { useLogoutMutation } from '@/utils/query-options';
+import { profileQueryOptions, useLogoutMutation } from '@/utils/query-options';
 import {
   Button,
   cn,
@@ -14,6 +14,7 @@ import {
   useDisclosure,
   User,
 } from '@heroui/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   createFileRoute,
   Link,
@@ -38,6 +39,8 @@ import * as React from 'react';
 import { toast } from 'sonner';
 
 export const Route = createFileRoute('/(app)/dashboard')({
+  loader: (opts) =>
+    opts.context.queryClient.ensureQueryData(profileQueryOptions()),
   component: RouteComponent,
 });
 
@@ -51,6 +54,8 @@ function RouteComponent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const logoutMutation = useLogoutMutation();
+
+  const profileQuery = useSuspenseQuery(profileQueryOptions());
 
   return (
     <div className="dashboard-container min-h-dvh bg-content3">
@@ -153,7 +158,7 @@ function RouteComponent() {
               as="button"
               className="transition-transform"
               description="Admin"
-              name="John Doe"
+              name={profileQuery.data.username || 'N/A'}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="User Actions" variant="flat">

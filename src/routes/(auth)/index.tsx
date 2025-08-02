@@ -1,4 +1,3 @@
-import { config } from '@/config/app';
 import { fieldInfo, validationTrigger } from '@/lib/form-errors';
 import { ApiLoginPayload } from '@/schemas/auth';
 import { useLoginMutation } from '@/utils/query-options';
@@ -29,8 +28,8 @@ function Form() {
 
   const form = useForm({
     defaultValues: {
-      username: config.isDev ? 'abrahamabbey' : '',
-      password: config.isDev ? '22cuma@ASU' : '',
+      username: '',
+      password: '',
     },
     onSubmit: ({ value }) => {
       loginMutation.mutate(value);

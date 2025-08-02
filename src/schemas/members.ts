@@ -113,3 +113,13 @@ export const ApiGetMembersResponse = z.object({
   previous: z.number().nullable(),
   results: z.array(ApiMemberResponseData),
 });
+
+export const ApiGetProfileResponse = z.object({
+  id: z.number(),
+  username: z.string(),
+  email: z.string(),
+});
+
+export const ApiDeleteMemberResponse = z.object({
+  message: z.string(),
+});
