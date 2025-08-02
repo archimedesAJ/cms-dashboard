@@ -1,4 +1,6 @@
+import { membersQueryOptions } from '@/utils/query-options';
 import { Card, CardBody } from '@heroui/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   BabyIcon,
@@ -15,10 +17,13 @@ import {
 } from 'lucide-react';
 
 export const Route = createFileRoute('/(app)/dashboard/')({
+  loader: (opts) =>
+    opts.context.queryClient.ensureQueryData(membersQueryOptions()),
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const membersQuery = useSuspenseQuery(membersQueryOptions());
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(min(20rem,100%),1fr))] gap-4">
       <Card>
@@ -37,7 +42,9 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-emerald-100/60 p-2 *:text-emerald-500">
               <UsersIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">700</p>
+            <p className="text-3xl font-bold md:text-4xl">
+              {membersQuery.data.count}
+            </p>
           </div>
         </CardBody>
       </Card>
@@ -57,7 +64,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-blue-100/60 p-2 *:text-blue-500">
               <UserIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">350</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -77,7 +84,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-pink-100/60 p-2 *:text-pink-500">
               <UserRoundIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">350</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -97,7 +104,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-purple-100/60 p-2 *:text-purple-500">
               <BabyIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">150</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -117,7 +124,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-green-100/60 p-2 *:text-green-500">
               <UserPlusIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">50</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -137,7 +144,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-default-100/60 p-2 *:text-default-500">
               <UsersRoundIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">400</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -157,7 +164,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-blue-100/60 p-2 *:text-blue-500">
               <Building2Icon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">400</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -177,7 +184,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-blue-100/60 p-2 *:text-blue-500">
               <MusicIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">300</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -197,7 +204,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-blue-100/60 p-2 *:text-blue-500">
               <ComputerIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">100</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -217,7 +224,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-amber-100/60 p-2 *:text-amber-500">
               <FlameIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">25</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
@@ -237,7 +244,7 @@ function RouteComponent() {
             <div className="flex size-16 items-center justify-center rounded-full bg-orange-100/60 p-2 *:text-orange-500">
               <ShieldIcon />
             </div>
-            <p className="text-3xl font-bold md:text-4xl">70</p>
+            <p className="text-3xl font-bold md:text-4xl">N/A</p>
           </div>
         </CardBody>
       </Card>
