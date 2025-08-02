@@ -99,7 +99,7 @@ export type ApiMemberPayload = z.infer<typeof ApiMemberPayload>;
 const ApiMemberResponseData = ApiMemberPayload.extend({
   id: z.number(),
   member_no: z.string(),
-  image: z.string().nullable(), // override image type
+  image: z.string().nullish(), // override image type
 });
 
 export const ApiCreateMemberResponse = z.object({
